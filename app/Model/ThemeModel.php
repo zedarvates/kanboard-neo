@@ -24,6 +24,7 @@ class ThemeModel extends Base
             'light' => t('Light theme'),
             'dark' => t('Dark theme'),
             'auto' => t('Automatic theme - Sync with system'),
+            'linear' => t('Linear Dark'),
         ];
     }
 }

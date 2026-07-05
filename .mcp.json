@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "botte-llm": {
+      "command": "/usr/bin/python3",
+      "args": [
+        "-m",
+        "skills.llm_mcp.server"
+      ],
+      "cwd": "/home/redgamer/projects/botte-secrete"
+    }
+  }
+}

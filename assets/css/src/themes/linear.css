@@ -1,0 +1,296 @@
+:root {
+    --body-background-color: #0E0E0E;
+    --header-background-color: #0E0E0E;
+
+    --color-primary: #E5E5E5;
+    --color-light: #8A8A8A;
+    --color-lighter: #6B6B6B;
+    --color-dark: #0E0E0E;
+    --color-medium: #3A3A3A;
+    --color-error: #EF4444;
+
+    --link-color-primary: #5E6AD2;
+    --link-color-focus: #7C85E0;
+    --link-color-hover: #7C85E0;
+
+    --alert-color-default: #8A8A8A;
+    --alert-color-success: #22C55E;
+    --alert-color-error: #EF4444;
+    --alert-color-info: #5E6AD2;
+    --alert-color-normal: #E5E5E5;
+
+    --alert-background-color-default: #1A1A1A;
+    --alert-background-color-success: #132B1A;
+    --alert-background-color-error: #2E1313;
+    --alert-background-color-info: #15183A;
+    --alert-background-color-normal: #242424;
+
+    --alert-border-color-default: #2E2E2E;
+    --alert-border-color-success: #1B4A2A;
+    --alert-border-color-error: #4A1A1A;
+    --alert-border-color-info: #2A2D5E;
+    --alert-border-color-normal: #3A3A3A;
+
+    --button-default-color: #E5E5E5;
+    --button-default-background-color: #242424;
+    --button-default-border-color: #2E2E2E;
+
+    --button-default-color-focus: #FFFFFF;
+    --button-default-background-color-focus: #2E2E2E;
+    --button-default-border-color-focus: #3A3A3A;
+
+    --button-primary-color: #FFFFFF;
+    --button-primary-background-color: #5E6AD2;
+    --button-primary-border-color: #5E6AD2;
+
+    --button-primary-color-focus: #FFFFFF;
+    --button-primary-background-color-focus: #4F5ABF;
+    --button-primary-border-color-focus: #4F5ABF;
+
+    --button-danger-color: #FFFFFF;
+    --button-danger-background-color: #EF4444;
+    --button-danger-border-color: #EF4444;
+
+    --button-danger-color-focus: #FFFFFF;
+    --button-danger-background-color-focus: #DC2626;
+    --button-danger-border-color-focus: #DC2626;
+
+    --button-disabled-color: #6B6B6B;
+    --button-disabled-background-color: #1A1A1A;
+    --button-disabled-border-color: #2E2E2E;
+
+    --table-header-background-color: #1A1A1A;
+    --table-nth-background-color: #181818;
+    --table-border-color: #2E2E2E;
+
+    --avatar-color-letter: #FFFFFF;
+
+    --activity-title-color: #E5E5E5;
+    --activity-title-border-color: #2E2E2E;
+    --activity-event-background-color: #1A1A1A;
+    --activity-event-hover-color: #0E0E0E;
+
+    --user-mention-color: #5E6AD2;
+
+    --board-task-limit-color: #EF4444;
+
+    --table-list-header-border-color: #2E2E2E;
+    --table-list-header-background-color: #1A1A1A;
+    --table-list-nth-background-color: #181818;
+    --table-list-border-color: #2E2E2E;
+    --table-list-row-hover-border-color: #3A3A3A;
+    --table-list-row-background-color: #242424;
+
+    --sidebar-border-color: #2E2E2E;
+
+    --dropdown-background-color: #1A1A1A;
+    --dropdown-border-color: #2E2E2E;
+    --dropdown-li-border-color: #2E2E2E;
+
+    --input-addon-background-color: #1A1A1A;
+    --input-addon-color: #6B6B6B;
+
+    --views-background-color: #1A1A1A;
+    --views-border-color: #2E2E2E;
+    --views-active-color: #5E6AD2;
+
+    --input-focus-color: #E5E5E5;
+    --input-focus-border-color: #5E6AD2;
+    --input-focus-shadow-color: rgba(94, 106, 210, 0.25);
+    --input-background-color: #1A1A1A;
+    --input-border-color: #2E2E2E;
+    --input-placeholder-color: #6B6B6B;
+
+    --tooltip-background-color: #1A1A1A;
+    --tooltip-border-color: #2E2E2E;
+    --tooltip-shadow-color: #000000;
+
+    --panel-background-color: #1A1A1A;
+    --panel-border-color: #2E2E2E;
+
+    --draggable-item-selected-background-color: #242424;
+    --draggable-item-selected-border-color: #5E6AD2;
+    --draggable-item-hover-background-color: #2E2E2E;
+    --draggable-row-handle-color: #3A3A3A;
+    --draggable-placeholder-background-color: #1A1A1A;
+    --draggable-placeholder-border-color: #5E6AD2;
+
+    --task-list-icons-color: #6B6B6B;
+
+    --form-help-color: #F59E0B;
+    --form-error-color: #EF4444;
+
+    --comment-title-border-color: #2E2E2E;
+    --comment-nth-background-color: #1A1A1A;
+    --comment-highlighted-background-color: #1E1E2E;
+    --comment-highlighted-hover-background-color: #0E0E0E;
+    --comment-highlighted-border-color: #5E6AD2;
+
+    --board-column-header-background-color: #0E0E0E;
+    --board-column-title-color: #8A8A8A;
+    --task-board-background-color: #1A1A1A;
+    --task-board-border-color: #2E2E2E;
+    --task-board-hover-border-color: #3A3A3A;
+}
+
+html {
+    color-scheme: dark;
+}
+
+body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+}
+
+/* Header */
+header {
+    border-bottom: 1px solid #2E2E2E;
+}
+
+/* Board columns */
+.task-board {
+    background-color: var(--task-board-background-color);
+    border: 1px solid var(--task-board-border-color);
+    border-radius: 6px;
+    padding: 12px;
+    transition: border-color 0.15s ease;
+}
+
+.task-board:hover {
+    border-color: #3A3A3A;
+}
+
+.task-board-title {
+    color: #E5E5E5;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Board column headers */
+.board-container-header {
+    background-color: #0E0E0E;
+    border-bottom: 1px solid #2E2E2E;
+}
+
+/* Sidebar */
+.sidebar {
+    border-right: 1px solid #2E2E2E;
+}
+
+/* Tables */
+table th {
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6B6B6B;
+}
+
+/* Modals */
+.modal-header {
+    border-bottom: 1px solid #2E2E2E;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+textarea,
+select {
+    background-color: #1A1A1A;
+    border: 1px solid #2E2E2E;
+    border-radius: 6px;
+    color: #E5E5E5;
+    padding: 8px 12px;
+    font-size: 13px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #5E6AD2;
+    box-shadow: 0 0 0 2px rgba(94, 106, 210, 0.15);
+    outline: none;
+}
+
+/* Buttons */
+button, .btn {
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 16px;
+    transition: all 0.15s ease;
+}
+
+.btn-blue {
+    background-color: #5E6AD2;
+    border-color: #5E6AD2;
+    color: #FFFFFF;
+}
+
+.btn-blue:hover {
+    background-color: #4F5ABF;
+    border-color: #4F5ABF;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0E0E0E;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2E2E2E;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3A3A3A;
+}
+
+/* Login page */
+.form-login {
+    background-color: #1A1A1A;
+    border: 1px solid #2E2E2E;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    max-width: 360px;
+    margin: 80px auto;
+    padding: 32px;
+}
+
+/* Panels */
+.panel {
+    border-radius: 8px;
+    border: 1px solid #2E2E2E;
+}
+
+/* Color badges */
+.color-picker-square {
+    border-radius: 4px;
+}
+
+/* Priority badges */
+.task-priority {
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* Task tags */
+.task-tag {
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+}

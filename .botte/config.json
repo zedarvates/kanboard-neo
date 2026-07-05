@@ -1,0 +1,8 @@
+{
+  "botte_root": "/home/redgamer/projects/botte-secrete",
+  "local_backend": "127.0.0.1:11434",
+  "local_model": "qwen2.5-coder:7b",
+  "cloud_keys_present": [],
+  "daily_token_budget": 50000,
+  "routing": "auto"
+}

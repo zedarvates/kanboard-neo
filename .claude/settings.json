@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/usr/bin/python3\" -m skills.preflight.hook",
+            "cwd": "/home/redgamer/projects/botte-secrete"
+          }
+        ]
+      }
+    ]
+  }
+}

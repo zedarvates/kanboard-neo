@@ -1,0 +1,38 @@
+{
+  "project": "/home/redgamer/projects/kanboard-fork",
+  "botte_root": "/home/redgamer/projects/botte-secrete",
+  "local_backends": [
+    "Ollama 127.0.0.1:11434"
+  ],
+  "cloud_keys_present": [],
+  "mcp": {
+    "path": "/home/redgamer/projects/kanboard-fork/.mcp.json",
+    "action": "added",
+    "other_servers": []
+  },
+  "directives": {
+    "available": true,
+    "score": 60,
+    "has_instructions": false,
+    "findings": 1,
+    "created": "AGENTS.md"
+  },
+  "config": "/home/redgamer/projects/kanboard-fork/.botte/config.json",
+  "policy": {
+    "written": "/home/redgamer/projects/kanboard-fork/.botte/policy.md",
+    "agents_pointer_added": true
+  },
+  "hook": {
+    "path": "/home/redgamer/projects/kanboard-fork/.claude/settings.json",
+    "action": "added"
+  },
+  "oculix_mcp": {
+    "action": "skipped",
+    "reason": "OculiX MCP jar not found (~/.oculix/oculix-mcp-server.jar or $OCULIX_MCP_JAR)"
+  },
+  "skill_catalog_size": 52,
+  "next_steps": [
+    "Local routing active — cheap tasks will run on Ollama for 0 cloud tokens.",
+    "Restart your agent in the project so it picks up .mcp.json (tools: auto_route, local_chat, fusion, find_skills, audit_local_usage)."
+  ]
+}
