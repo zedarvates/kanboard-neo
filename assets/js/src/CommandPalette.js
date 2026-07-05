@@ -1,0 +1,188 @@
+Kanboard.CommandPalette = function(app) {
+    this.app = app;
+};
+
+Kanboard.CommandPalette.prototype.execute = function() {
+    this.buildOverlay();
+    this.listen();
+};
+
+Kanboard.CommandPalette.prototype.listen = function() {
+    var self = this;
+
+    // Cmd+K / Ctrl+K to open
+    $(document).on('keydown', function(e) {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+            e.preventDefault();
+            self.open();
+        }
+        if (e.key === 'Escape') {
+            self.close();
+        }
+    });
+
+    // Search input
+    $('#command-palette-input').on('input', function() {
+        self.search($(this).val());
+    });
+
+    // Arrow keys navigation
+    $('#command-palette-input').on('keydown', function(e) {
+        var items = $('#command-palette-results .cp-item');
+        var active = $('#command-palette-results .cp-item.active');
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            var next = active.next('.cp-item');
+            if (next.length) {
+                active.removeClass('active');
+                next.addClass('active');
+            } else if (items.length) {
+                active.removeClass('active');
+                $(items[0]).addClass('active');
+            }
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            var prev = active.prev('.cp-item');
+            if (prev.length) {
+                active.removeClass('active');
+                prev.addClass('active');
+            } else if (items.length) {
+                active.removeClass('active');
+                $(items[items.length - 1]).addClass('active');
+            }
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            var link = active.find('a').attr('href');
+            if (link) {
+                window.location.href = link;
+            }
+        }
+    });
+
+    // Click on overlay background to close
+    $('#command-palette').on('click', function(e) {
+        if (e.target === this) {
+            self.close();
+        }
+    });
+};
+
+Kanboard.CommandPalette.prototype.buildOverlay = function() {
+    if ($('#command-palette').length) return;
+
+    var overlay = `
+    <div id="command-palette" style="display:none;">
+        <div class="cp-overlay"></div>
+        <div class="cp-modal">
+            <div class="cp-search">
+                <svg class="cp-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+                </svg>
+                <input type="text" id="command-palette-input" placeholder="Search projects, tasks, pages..." autofocus>
+                <span class="cp-shortcut">ESC</span>
+            </div>
+            <div id="command-palette-results">
+                <div class="cp-section-label">Pages</div>
+                <div class="cp-item"><a href="/dashboard/">Dashboard</a></div>
+                <div class="cp-item"><a href="/search/">Search Tasks</a></div>
+                <div class="cp-item"><a href="/user/profile">Profile</a></div>
+                <div class="cp-item"><a href="/manage">Settings</a></div>
+            </div>
+        </div>
+    </div>`;
+
+    $('body').append(overlay);
+};
+
+Kanboard.CommandPalette.prototype.open = function() {
+    $('#command-palette').fadeIn(100);
+    setTimeout(function() {
+        $('#command-palette-input').focus().select();
+    }, 100);
+    this.loadProjects();
+};
+
+Kanboard.CommandPalette.prototype.close = function() {
+    $('#command-palette').fadeOut(80);
+    $('#command-palette-input').val('');
+    $('#command-palette-results').html('<div class="cp-section-label">Pages</div><div class="cp-item"><a href="/dashboard/">Dashboard</a></div><div class="cp-item"><a href="/search/">Search Tasks</a></div><div class="cp-item"><a href="/user/profile">Profile</a></div><div class="cp-item"><a href="/manage">Settings</a></div>');
+};
+
+Kanboard.CommandPalette.prototype.search = function(query) {
+    var self = this;
+    if (!query || query.length < 1) {
+        this.close();
+        return;
+    }
+
+    // Simple local search through page content
+    var results = [];
+    var q = query.toLowerCase();
+
+    // Static page search
+    var pages = [
+        {label: 'Dashboard', url: '/dashboard/', section: 'Pages'},
+        {label: 'Search Tasks', url: '/search/', section: 'Pages'},
+        {label: 'Profile Settings', url: '/user/profile', section: 'Pages'},
+        {label: 'Project Management', url: '/manage', section: 'Pages'},
+    ];
+
+    pages.forEach(function(p) {
+        if (p.label.toLowerCase().indexOf(q) >= 0) {
+            results.push(p);
+        }
+    });
+
+    // Search page text
+    var title = document.title.replace('Kanboard', '').trim();
+    if (title.toLowerCase().indexOf(q) >= 0) {
+        results.push({label: 'Current: ' + title, url: window.location.pathname, section: 'Current Page'});
+    }
+
+    this.renderResults(results, query);
+};
+
+Kanboard.CommandPalette.prototype.loadProjects = function() {
+    var self = this;
+
+    // Check if we already have project links on the page
+    var projectLinks = [];
+    $('a[href*="project_id="]').each(function() {
+        var href = $(this).attr('href');
+        var text = $(this).text().trim();
+        if (text && href && projectLinks.length < 20) {
+            projectLinks.push({label: text, url: href, section: 'Projects'});
+        }
+    });
+
+    if (projectLinks.length > 0) {
+        var html = '<div class="cp-section-label">Projects</div>';
+        projectLinks.forEach(function(p) {
+            html += '<div class="cp-item"><a href="' + p.url + '">' + $('<span>').text(p.label).html() + '</a></div>';
+        });
+        html += '<div class="cp-section-label">Pages</div>';
+        html += '<div class="cp-item"><a href="/dashboard/">Dashboard</a></div>';
+        html += '<div class="cp-item"><a href="/search/">Search Tasks</a></div>';
+        $('#command-palette-results').html(html);
+    }
+};
+
+Kanboard.CommandPalette.prototype.renderResults = function(results, query) {
+    var html = '';
+    var currentSection = '';
+
+    if (results.length === 0) {
+        html = '<div class="cp-empty">No results for "' + $('<span>').text(query).html() + '"</div>';
+    } else {
+        results.forEach(function(r) {
+            if (r.section !== currentSection) {
+                currentSection = r.section;
+                html += '<div class="cp-section-label">' + r.section + '</div>';
+            }
+            html += '<div class="cp-item"><a href="' + r.url + '">' + $('<span>').text(r.label).html() + '</a></div>';
+        });
+    }
+
+    $('#command-palette-results').html(html);
+};
