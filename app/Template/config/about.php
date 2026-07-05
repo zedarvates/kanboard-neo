@@ -4,16 +4,20 @@
 <div class="panel">
     <ul>
         <li>
-            <?= t('Official website:') ?>
-            <a href="https://kanboard.org/" target="_blank" rel="noopener noreferrer">https://kanboard.org/</a>
+            <strong>Kanboard Neo</strong> — <?= t('Fork with Linear-inspired design and workflows') ?>
         </li>
         <li>
-            <?= t('Author:') ?>
-            <strong>Frédéric Guillot</strong> (<a href="https://github.com/kanboard/kanboard/graphs/contributors" target="_blank" rel="noopener noreferrer"><?= t('contributors') ?></a>)
+            <?= t('Based on:') ?>
+            <a href="https://kanboard.org/" target="_blank" rel="noopener noreferrer">Kanboard</a>
+            <?= t('by') ?> <strong>Frédéric Guillot</strong>
         </li>
         <li>
             <?= t('License:') ?>
             <strong>MIT</strong>
+        </li>
+        <li>
+            <?= t('Source:') ?>
+            <a href="https://github.com/zedarvates/kanboard-neo" target="_blank" rel="noopener noreferrer">github.com/zedarvates/kanboard-neo</a>
         </li>
     </ul>
 </div>

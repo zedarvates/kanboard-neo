@@ -46,7 +46,7 @@ class CommandProvider implements ServiceProviderInterface
      */
     public function register(Container $container)
     {
-        $application = new Application('Kanboard', APP_VERSION);
+        $application = new Application('Kanboard Neo', APP_VERSION);
         $application->add(new TaskOverdueNotificationCommand($container));
         $application->add(new SubtaskExportCommand($container));
         $application->add(new TaskExportCommand($container));
