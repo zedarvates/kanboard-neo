@@ -205,7 +205,7 @@ class UserSession extends Base
     public function getTheme()
     {
         if (! $this->isLogged()) {
-            return 'light';
+            return 'linear';
         }
 
         $user_session = session_get('user');
@@ -214,7 +214,7 @@ class UserSession extends Base
             return $user_session['theme'];
         }
 
-        return 'light';
+        return 'linear';
     }
 
     /**
