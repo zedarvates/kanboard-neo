@@ -258,15 +258,354 @@ button, .btn {
     background: #3A3A3A;
 }
 
+/* Priority badges (Linear-style) */
+.task-priority {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+}
+
+.priority-icon {
+    font-size: 8px;
+    line-height: 1;
+}
+
+.priority-urgent {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: #FCA5A5;
+    border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.priority-high {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: #FCD34D;
+    border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.priority-medium {
+    background-color: rgba(94, 106, 210, 0.15);
+    color: #A5B4FC;
+    border: 1px solid rgba(94, 106, 210, 0.25);
+}
+
+.priority-low {
+    background-color: rgba(107, 107, 107, 0.15);
+    color: #9CA3AF;
+    border: 1px solid rgba(107, 107, 107, 0.2);
+}
+
+.priority-none {
+    background: none;
+    color: #6B6B6B;
+    border: none;
+}
+
+/* Task board cards - Linear style */
+.task-board {
+    background-color: #1A1A1A;
+    border: 1px solid #2E2E2E;
+    border-radius: 8px;
+    padding: 14px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    margin: 0 6px 8px 6px;
+    position: relative;
+}
+
+.task-board:hover {
+    border-color: #3A3A3A;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.task-board-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.task-board-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #E5E5E5;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.task-board-title a {
+    color: #E5E5E5;
+    text-decoration: none;
+}
+
+.task-board-title a:hover {
+    color: #FFFFFF;
+}
+
+/* Task footer icons row */
+.task-board-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-top: 8px;
+    font-size: 11px;
+    color: #6B6B6B;
+}
+
+.task-board-icons-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.task-board-icons a,
+.task-board-icons span {
+    color: #6B6B6B;
+}
+
+/* Assignee avatar */
+.task-board-avatar {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.avatar-letter {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    background-color: #5E6AD2;
+    color: #FFFFFF;
+}
+
+/* Task tags */
+.task-tags {
+    margin: 6px 0;
+}
+
+.task-tag {
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 500;
+    background-color: rgba(94, 106, 210, 0.1);
+    color: #A5B4FC;
+    border: 1px solid rgba(94, 106, 210, 0.2);
+}
+
+/* Due date */
+.task-date {
+    font-size: 11px;
+    color: #6B6B6B;
+}
+
+.task-date-overdue {
+    color: #FCA5A5;
+    font-weight: 600;
+}
+
+.task-date-today {
+    color: #FCD34D;
+}
+
+/* Score/complexity */
+.task-score {
+    font-size: 11px;
+    color: #6B6B6B;
+}
+
+/* User mention */
+.user-mention {
+    color: #5E6AD2;
+    font-weight: 500;
+}
+
+/* Board columns */
+.board-container-header {
+    background-color: #0E0E0E !important;
+    border-bottom: 1px solid #2E2E2E;
+}
+
+.board-column-title {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6B6B6B;
+}
+
+/* Closed tasks */
+.task-board-closed {
+    font-size: 11px;
+    color: #6B6B6B;
+    background-color: rgba(239, 68, 68, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* Loading/status */
+.task-board-saving-icon {
+    color: #5E6AD2;
+}
+
+/* Task category */
+.task-board-category {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-radius: 3px;
+    padding: 1px 6px;
+}
+
+/* Time estimation */
+.task-time-estimated {
+    font-size: 11px;
+    color: #6B6B6B;
+}
+
+/* Reference */
+.task-board-reference {
+    font-size: 10px;
+    color: #6B6B6B;
+}
+
+/* Swimlane header */
+.swimlane-row {
+    border-bottom: 1px solid #2E2E2E;
+}
+
+/* Sidebar navigation */
+.sidebar {
+    border-right: 1px solid #2E2E2E;
+    background-color: #0E0E0E;
+}
+
+.sidebar li a {
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: #8A8A8A;
+    font-size: 13px;
+    transition: background-color 0.15s ease;
+}
+
+.sidebar li a:hover {
+    background-color: #1A1A1A;
+    color: #E5E5E5;
+}
+
+.sidebar li.active a {
+    background-color: #1A1A1A;
+    color: #5E6AD2;
+    font-weight: 500;
+}
+
 /* Login page */
 .form-login {
     background-color: #1A1A1A;
     border: 1px solid #2E2E2E;
     border-radius: 12px;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
-    max-width: 360px;
-    margin: 80px auto;
-    padding: 32px;
+    max-width: 380px;
+    margin: 60px auto;
+    padding: 40px;
+}
+
+.form-login h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #E5E5E5;
+    margin: 0;
+}
+
+.login-logo {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.login-logo svg {
+    margin-bottom: 12px;
+}
+
+.login-subtitle {
+    font-size: 13px;
+    color: #6B6B6B;
+    margin-top: 4px;
+}
+
+.form-login label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #8A8A8A;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.login-field {
+    margin-bottom: 16px;
+}
+
+.form-login input[type="text"],
+.form-login input[type="password"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    background-color: #0E0E0E;
+    border: 1px solid #2E2E2E;
+    border-radius: 8px;
+    color: #E5E5E5;
+    font-size: 14px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-login input[type="text"]:focus,
+.form-login input[type="password"]:focus {
+    border-color: #5E6AD2;
+    box-shadow: 0 0 0 3px rgba(94, 106, 210, 0.15);
+    outline: none;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.login-checkbox {
+    font-size: 13px !important;
+    text-transform: none !important;
+    color: #8A8A8A !important;
+    letter-spacing: normal !important;
+}
+
+.reset-password {
+    text-align: center;
+    margin-top: 16px;
+}
+
+.reset-password a {
+    font-size: 12px;
+    color: #6B6B6B;
+    text-decoration: none;
+}
+
+.reset-password a:hover {
+    color: #5E6AD2;
 }
 
 /* Panels */

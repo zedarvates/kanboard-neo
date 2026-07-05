@@ -237,9 +237,38 @@ class TaskHelper extends Base
 
     public function renderPriority($priority)
     {
-        $html = '<span class="task-priority" title="'.t('Task priority').'">';
+        $labels = [
+            -1 => 'None',
+            0 => 'None',
+            1 => 'Urgent',
+            2 => 'High',
+            3 => 'Medium',
+            4 => 'Low',
+        ];
+        $colors = [
+            -1 => 'priority-none',
+            0 => 'priority-none',
+            1 => 'priority-urgent',
+            2 => 'priority-high',
+            3 => 'priority-medium',
+            4 => 'priority-low',
+        ];
+        $icons = [
+            -1 => '',
+            0 => '',
+            1 => '▲',
+            2 => '■',
+            3 => '◆',
+            4 => '▼',
+        ];
+        $label = isset($labels[$priority]) ? $labels[$priority] : 'P'.$priority;
+        $class = isset($colors[$priority]) ? $colors[$priority] : '';
+        $icon = isset($icons[$priority]) ? $icons[$priority] : '';
+
+        $html = '<span class="task-priority '.$class.'" title="'.t('Task priority').'">';
         $html .= '<span class="ui-helper-hidden-accessible">'.t('Task priority').' </span>';
-        $html .= $this->helper->text->e($priority >= 0 ? 'P'.$priority : '-P'.abs($priority));
+        $html .= $icon ? '<span class="priority-icon">'.$icon.'</span> ' : '';
+        $html .= $this->helper->text->e($label);
         $html .= '</span>';
 
         return $html;
