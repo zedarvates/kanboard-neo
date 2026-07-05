@@ -20,7 +20,7 @@ class BoardModel extends Base
      */
     public function getDefaultColumns()
     {
-        return array(t('Backlog'), t('Ready'), t('Work in progress'), t('Done'));
+        return array(t('Triage'), t('Backlog'), t('Started'), t('In Review'), t('Done'), t('Canceled'));
     }
 
     /**
