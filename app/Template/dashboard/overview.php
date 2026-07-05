@@ -1,12 +1,31 @@
 <?= $this->hook->render('template:dashboard:show:before-filter-box', array('user' => $user)) ?>
 
+<div class="dashboard-stats">
+    <div class="dashboard-stat-card">
+        <div class="stat-value"><?= $project_paginator->getTotal() ?></div>
+        <div class="stat-label">Projects</div>
+    </div>
+    <div class="dashboard-stat-card">
+        <div class="stat-value">0</div>
+        <div class="stat-label">My Tasks</div>
+    </div>
+    <div class="dashboard-stat-card">
+        <div class="stat-value">0</div>
+        <div class="stat-label">In Review</div>
+    </div>
+    <div class="dashboard-stat-card">
+        <div class="stat-value">0</div>
+        <div class="stat-label">Overdue</div>
+    </div>
+</div>
+
 <div class="filter-box margin-bottom">
     <form method="get" action="<?= $this->url->dir() ?>" class="search">
         <?= $this->form->hidden('controller', array('controller' => 'SearchController')) ?>
         <?= $this->form->hidden('action', array('action' => 'index')) ?>
 
         <div class="input-addon">
-            <?= $this->form->text('search', array(), array(), array('placeholder="'.t('Search').'"', 'aria-label="'.t('Search').'"'), 'input-addon-field') ?>
+            <?= $this->form->text('search', array(), array(), array('placeholder="Search tasks, projects..."', 'aria-label="'.t('Search').'"'), 'input-addon-field') ?>
             <div class="input-addon-item">
                 <?= $this->render('app/filters_helper') ?>
             </div>
@@ -17,6 +36,10 @@
 <?= $this->hook->render('template:dashboard:show:after-filter-box', array('user' => $user)) ?>
 
 <?php if (! $project_paginator->isEmpty()): ?>
+    <div class="section-title">
+        <h2>Projects</h2>
+        <span class="section-count"><?= $project_paginator->getTotal() ?></span>
+    </div>
     <div class="table-list">
         <?= $this->render('project_list/header', array('paginator' => $project_paginator)) ?>
         <?php foreach ($project_paginator->getCollection() as $project): ?>
@@ -43,8 +66,10 @@
                 </div>
                 <div class="table-list-details">
                     <?php foreach ($project['columns'] as $column): ?>
-                        <strong title="<?= t('Task count') ?>"><span class="ui-helper-hidden-accessible"><?= t('Task count') ?> </span><?= $column['nb_open_tasks'] ?></strong>
-                        <small><?= $this->text->e($column['title']) ?></small>
+                        <span class="column-badge">
+                            <strong><?= $column['nb_open_tasks'] ?></strong>
+                            <small><?= $this->text->e($column['title']) ?></small>
+                        </span>
                     <?php endforeach ?>
                 </div>
             </div>
@@ -55,12 +80,24 @@
 <?php endif ?>
 
 <?php if (empty($overview_paginator)): ?>
-    <p class="alert"><?= t('There is nothing assigned to you.') ?></p>
+    <div class="empty-state">
+        <div class="empty-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2E2E2E" stroke-width="1.5">
+                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                <path d="M9 14l2 2 4-4"/>
+            </svg>
+        </div>
+        <p class="empty-text">Nothing assigned to you</p>
+        <p class="empty-hint">Tasks assigned to you will appear here</p>
+    </div>
 <?php else: ?>
     <?php foreach ($overview_paginator as $result): ?>
         <?php if (! $result['paginator']->isEmpty()): ?>
-            <div class="page-header">
-                <h2 id="project-tasks-<?= $result['project_id'] ?>"><?= $this->url->link($this->text->e($result['project_name']), 'BoardViewController', 'show', array('project_id' => $result['project_id'])) ?></h2>
+            <div class="section-title">
+                <h2 id="project-tasks-<?= $result['project_id'] ?>">
+                    <?= $this->url->link($this->text->e($result['project_name']), 'BoardViewController', 'show', array('project_id' => $result['project_id'])) ?>
+                </h2>
+                <span class="section-count"><?= $result['paginator']->getTotal() ?></span>
             </div>
 
             <div class="table-list">
