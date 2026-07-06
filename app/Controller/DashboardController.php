@@ -19,12 +19,47 @@ class DashboardController extends BaseController
     {
         $user = $this->getUser();
 
+        // Compute real dashboard stats
+        $myTasks = $this->taskFinderModel->countByAssignee($user['id']);
+        $inReview = $this->db->table('tasks')
+            ->eq('owner_id', $user['id'])
+            ->eq('is_active', 1)
+            ->eq('column_id', $this->getInReviewColumnIds())
+            ->count();
+        $overdue = $this->taskFinderModel->getOverdueTasksByUser($user['id']);
+        $projectsCount = $this->projectPermissionModel->getActiveProjectIds($user['id']);
+        $recentActivity = $this->helper->projectActivity->getProjectsActivities(
+            $this->projectPermissionModel->getActiveProjectIds($user['id']),
+            10
+        );
+
         $this->response->html($this->helper->layout->dashboard('dashboard/overview', array(
             'title'              => t('Dashboard for %s', $this->helper->user->getFullname($user)),
             'user'               => $user,
             'overview_paginator' => $this->dashboardPagination->getOverview($user['id']),
             'project_paginator'  => $this->projectPagination->getDashboardPaginator($user['id'], 'show', DASHBOARD_MAX_PROJECTS),
+            'my_tasks_count'     => $myTasks,
+            'in_review_count'    => $inReview,
+            'overdue_count'      => is_array($overdue) ? count($overdue) : $overdue,
+            'projects_count'     => is_array($projectsCount) ? count($projectsCount) : $projectsCount,
+            'recent_activity'    => $recentActivity,
         )));
+    }
+
+    /**
+     * Get column IDs that represent "in review" status
+     */
+    private function getInReviewColumnIds(): array
+    {
+        $projectIds = $this->projectPermissionModel->getActiveProjectIds($this->getUser()['id']);
+        if (empty($projectIds)) {
+            return [0];
+        }
+        return $this->db->table('columns')
+            ->eq('columns.hide_in_dashboard', 0)
+            ->in('columns.project_id', $projectIds)
+            ->ilike('columns.title', '%review%')
+            ->findAll('columns.id');
     }
 
     /**
