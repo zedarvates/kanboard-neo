@@ -131,14 +131,16 @@ abstract class Base extends TestCase
         $loader->addPsr4('Kanboard\Plugin\\', PLUGINS_DIR);
         $loader->register();
 
-        // These tests verify generic formatter/finder/duplication/move mechanics
-        // against historical four-column fixtures. Keep those fixtures explicit
-        // instead of coupling unrelated assertions to the application default.
+        // These tests verify generic formatter/finder/link/duplication/move
+        // mechanics against historical four-column fixtures. Keep those
+        // fixtures explicit instead of coupling unrelated assertions to the
+        // application default.
         $legacyBoardFixtureClasses = array(
             \KanboardTests\units\Formatter\BoardFormatterTest::class,
             \KanboardTests\units\Model\ActionModelTest::class,
             \KanboardTests\units\Model\ProjectDuplicationModelTest::class,
             \KanboardTests\units\Model\TaskFinderModelTest::class,
+            \KanboardTests\units\Model\TaskLinkModelTest::class,
             \KanboardTests\units\Model\TaskProjectDuplicationModelTest::class,
             \KanboardTests\units\Model\TaskProjectMoveModelTest::class,
         );
