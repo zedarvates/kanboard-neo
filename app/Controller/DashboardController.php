@@ -2,6 +2,9 @@
 
 namespace Kanboard\Controller;
 
+use Kanboard\Model\ColumnModel;
+use Kanboard\Model\TaskModel;
+
 /**
  * Dashboard Controller
  *
@@ -18,48 +21,64 @@ class DashboardController extends BaseController
     public function show()
     {
         $user = $this->getUser();
+        $dashboardData = $this->getDashboardData($user);
 
-        // Compute real dashboard stats
-        $myTasks = $this->taskFinderModel->countByAssignee($user['id']);
-        $inReview = $this->db->table('tasks')
-            ->eq('owner_id', $user['id'])
-            ->eq('is_active', 1)
-            ->eq('column_id', $this->getInReviewColumnIds())
-            ->count();
-        $overdue = $this->taskFinderModel->getOverdueTasksByUser($user['id']);
-        $projectsCount = $this->projectPermissionModel->getActiveProjectIds($user['id']);
-        $recentActivity = $this->helper->projectActivity->getProjectsActivities(
-            $this->projectPermissionModel->getActiveProjectIds($user['id']),
-            10
-        );
-
-        $this->response->html($this->helper->layout->dashboard('dashboard/overview', array(
+        $this->response->html($this->helper->layout->dashboard('dashboard/overview', array_merge(array(
             'title'              => t('Dashboard for %s', $this->helper->user->getFullname($user)),
             'user'               => $user,
             'overview_paginator' => $this->dashboardPagination->getOverview($user['id']),
             'project_paginator'  => $this->projectPagination->getDashboardPaginator($user['id'], 'show', DASHBOARD_MAX_PROJECTS),
-            'my_tasks_count'     => $myTasks,
-            'in_review_count'    => $inReview,
-            'overdue_count'      => is_array($overdue) ? count($overdue) : $overdue,
-            'projects_count'     => is_array($projectsCount) ? count($projectsCount) : $projectsCount,
-            'recent_activity'    => $recentActivity,
-        )));
+        ), $dashboardData)));
     }
 
     /**
-     * Get column IDs that represent "in review" status
+     * Build the dynamic dashboard counters and activity feed.
+     *
+     * @param array $user
+     * @return array
      */
-    private function getInReviewColumnIds(): array
+    protected function getDashboardData(array $user)
     {
-        $projectIds = $this->projectPermissionModel->getActiveProjectIds($this->getUser()['id']);
-        if (empty($projectIds)) {
-            return [0];
+        $projectIds = $this->projectPermissionModel->getActiveProjectIds($user['id']);
+        $inReviewColumnIds = $this->getInReviewColumnIds($projectIds);
+        $inReviewCount = 0;
+
+        if (! empty($inReviewColumnIds)) {
+            $inReviewCount = $this->db->table(TaskModel::TABLE)
+                ->eq(TaskModel::TABLE.'.owner_id', $user['id'])
+                ->eq(TaskModel::TABLE.'.is_active', TaskModel::STATUS_OPEN)
+                ->in(TaskModel::TABLE.'.column_id', $inReviewColumnIds)
+                ->count();
         }
-        return $this->db->table('columns')
-            ->eq('columns.hide_in_dashboard', 0)
-            ->in('columns.project_id', $projectIds)
-            ->ilike('columns.title', '%review%')
-            ->findAll('columns.id');
+
+        return array(
+            'my_tasks_count' => $this->taskFinderModel->getUserQuery($user['id'])->count(),
+            'in_review_count' => $inReviewCount,
+            'overdue_count' => count($this->taskFinderModel->getOverdueTasksByUser($user['id'])),
+            'projects_count' => count($projectIds),
+            'recent_activity' => empty($projectIds)
+                ? array()
+                : $this->helper->projectActivity->getProjectsEvents($projectIds, 10),
+        );
+    }
+
+    /**
+     * Get column IDs that represent "in review" status.
+     *
+     * @param array $projectIds
+     * @return array
+     */
+    protected function getInReviewColumnIds(array $projectIds)
+    {
+        if (empty($projectIds)) {
+            return array();
+        }
+
+        return $this->db->table(ColumnModel::TABLE)
+            ->eq(ColumnModel::TABLE.'.hide_in_dashboard', 0)
+            ->in(ColumnModel::TABLE.'.project_id', $projectIds)
+            ->ilike(ColumnModel::TABLE.'.title', '%review%')
+            ->findAllByColumn(ColumnModel::TABLE.'.id');
     }
 
     /**
