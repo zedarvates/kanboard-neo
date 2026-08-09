@@ -42,7 +42,7 @@ class TaskMoveAnotherProjectTest extends Base
         $this->assertNotEmpty($task);
         $this->assertEquals('test', $task['title']);
         $this->assertEquals(2, $task['project_id']);
-        $this->assertEquals(5, $task['column_id']);
+        $this->assertEquals(7, $task['column_id']);
     }
 
     public function testWithWrongColumn()
