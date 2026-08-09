@@ -42,6 +42,16 @@ class TaskDistributionAnalyticTest extends Base
                 'column_title' => 'In Review',
                 'nb_tasks' => 10,
                 'percentage' => 10.0,
+            ),
+            array(
+                'column_title' => 'Done',
+                'nb_tasks' => 0,
+                'percentage' => 0.0,
+            ),
+            array(
+                'column_title' => 'Canceled',
+                'nb_tasks' => 0,
+                'percentage' => 0.0,
             )
         );
 
