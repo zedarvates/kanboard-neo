@@ -18,7 +18,7 @@ class ColumnModelTest extends Base
 
         $column = $columnModel->getById(3);
         $this->assertNotEmpty($column);
-        $this->assertEquals('Work in progress', $column['title']);
+        $this->assertEquals('Started', $column['title']);
 
         $column = $columnModel->getById(33);
         $this->assertEmpty($column);
@@ -39,7 +39,7 @@ class ColumnModelTest extends Base
         $columnModel = new ColumnModel($this->container);
 
         $this->assertEquals(1, $projectModel->create(array('name' => 'UnitTest')));
-        $this->assertEquals(4, $columnModel->getLastColumnId(1));
+        $this->assertEquals(6, $columnModel->getLastColumnId(1));
     }
 
     public function testGetLastColumnPosition()
@@ -48,7 +48,7 @@ class ColumnModelTest extends Base
         $columnModel = new ColumnModel($this->container);
 
         $this->assertEquals(1, $projectModel->create(array('name' => 'UnitTest')));
-        $this->assertEquals(4, $columnModel->getLastColumnPosition(1));
+        $this->assertEquals(6, $columnModel->getLastColumnPosition(1));
     }
 
     public function testGetColumnIdByTitle()
@@ -57,7 +57,7 @@ class ColumnModelTest extends Base
         $columnModel = new ColumnModel($this->container);
 
         $this->assertEquals(1, $projectModel->create(array('name' => 'UnitTest')));
-        $this->assertEquals(2, $columnModel->getColumnIdByTitle(1, 'Ready'));
+        $this->assertEquals(2, $columnModel->getColumnIdByTitle(1, 'Backlog'));
     }
 
     public function testGetTitleByColumnId()
@@ -66,7 +66,7 @@ class ColumnModelTest extends Base
         $columnModel = new ColumnModel($this->container);
 
         $this->assertEquals(1, $projectModel->create(array('name' => 'UnitTest')));
-        $this->assertEquals('Work in progress', $columnModel->getColumnTitleById(3));
+        $this->assertEquals('Started', $columnModel->getColumnTitleById(3));
     }
 
     public function testGetAll()
@@ -77,23 +77,14 @@ class ColumnModelTest extends Base
         $this->assertEquals(1, $projectModel->create(array('name' => 'UnitTest')));
 
         $columns = $columnModel->getAll(1);
-        $this->assertCount(4, $columns);
+        $this->assertCount(6, $columns);
 
-        $this->assertEquals(1, $columns[0]['id']);
-        $this->assertEquals(1, $columns[0]['position']);
-        $this->assertEquals('Backlog', $columns[0]['title']);
-
-        $this->assertEquals(2, $columns[1]['id']);
-        $this->assertEquals(2, $columns[1]['position']);
-        $this->assertEquals('Ready', $columns[1]['title']);
-
-        $this->assertEquals(3, $columns[2]['id']);
-        $this->assertEquals(3, $columns[2]['position']);
-        $this->assertEquals('Work in progress', $columns[2]['title']);
-
-        $this->assertEquals(4, $columns[3]['id']);
-        $this->assertEquals(4, $columns[3]['position']);
-        $this->assertEquals('Done', $columns[3]['title']);
+        $expectedTitles = array('Triage', 'Backlog', 'Started', 'In Review', 'Done', 'Canceled');
+        foreach ($expectedTitles as $index => $title) {
+            $this->assertEquals($index + 1, $columns[$index]['id']);
+            $this->assertEquals($index + 1, $columns[$index]['position']);
+            $this->assertEquals($title, $columns[$index]['title']);
+        }
     }
 
     public function testGetAllWithTasksCount()
@@ -107,7 +98,7 @@ class ColumnModelTest extends Base
         $this->assertEquals(2, $taskCreationModel->create(array('title' => 'UnitTest', 'project_id' => 1, 'column_id' => 2, 'is_active' => 0)));
 
         $columns = $columnModel->getAllWithTaskCount(1);
-        $this->assertCount(4, $columns);
+        $this->assertCount(6, $columns);
 
         $this->assertEquals(1, $columns[0]['id']);
         $this->assertEquals(1, $columns[0]['position']);
@@ -115,13 +106,13 @@ class ColumnModelTest extends Base
         $this->assertEquals(0, $columns[0]['task_limit']);
         $this->assertEquals(0, $columns[0]['hide_in_dashboard']);
         $this->assertEquals('', $columns[0]['description']);
-        $this->assertEquals('Backlog', $columns[0]['title']);
+        $this->assertEquals('Triage', $columns[0]['title']);
         $this->assertEquals(1, $columns[0]['nb_open_tasks']);
         $this->assertEquals(0, $columns[0]['nb_closed_tasks']);
 
         $this->assertEquals(2, $columns[1]['id']);
         $this->assertEquals(2, $columns[1]['position']);
-        $this->assertEquals('Ready', $columns[1]['title']);
+        $this->assertEquals('Backlog', $columns[1]['title']);
         $this->assertEquals(0, $columns[1]['nb_open_tasks']);
         $this->assertEquals(1, $columns[1]['nb_closed_tasks']);
     }
@@ -134,19 +125,23 @@ class ColumnModelTest extends Base
         $this->assertEquals(1, $projectModel->create(array('name' => 'UnitTest')));
 
         $columns = $columnModel->getList(1);
-        $this->assertCount(4, $columns);
-        $this->assertEquals('Backlog', $columns[1]);
-        $this->assertEquals('Ready', $columns[2]);
-        $this->assertEquals('Work in progress', $columns[3]);
-        $this->assertEquals('Done', $columns[4]);
+        $this->assertCount(6, $columns);
+        $this->assertEquals('Triage', $columns[1]);
+        $this->assertEquals('Backlog', $columns[2]);
+        $this->assertEquals('Started', $columns[3]);
+        $this->assertEquals('In Review', $columns[4]);
+        $this->assertEquals('Done', $columns[5]);
+        $this->assertEquals('Canceled', $columns[6]);
 
         $columns = $columnModel->getList(1, true);
-        $this->assertCount(5, $columns);
+        $this->assertCount(7, $columns);
         $this->assertEquals('All columns', $columns[-1]);
-        $this->assertEquals('Backlog', $columns[1]);
-        $this->assertEquals('Ready', $columns[2]);
-        $this->assertEquals('Work in progress', $columns[3]);
-        $this->assertEquals('Done', $columns[4]);
+        $this->assertEquals('Triage', $columns[1]);
+        $this->assertEquals('Backlog', $columns[2]);
+        $this->assertEquals('Started', $columns[3]);
+        $this->assertEquals('In Review', $columns[4]);
+        $this->assertEquals('Done', $columns[5]);
+        $this->assertEquals('Canceled', $columns[6]);
     }
 
     public function testAddColumn()
@@ -160,16 +155,16 @@ class ColumnModelTest extends Base
 
         $columns = $columnModel->getAll(1);
         $this->assertTrue(is_array($columns));
-        $this->assertEquals(6, count($columns));
+        $this->assertEquals(8, count($columns));
 
-        $this->assertEquals('another column', $columns[4]['title']);
-        $this->assertEquals(0, $columns[4]['task_limit']);
-        $this->assertEquals(5, $columns[4]['position']);
+        $this->assertEquals('another column', $columns[6]['title']);
+        $this->assertEquals(0, $columns[6]['task_limit']);
+        $this->assertEquals(7, $columns[6]['position']);
 
-        $this->assertEquals('one more', $columns[5]['title']);
-        $this->assertEquals(3, $columns[5]['task_limit']);
-        $this->assertEquals(6, $columns[5]['position']);
-        $this->assertEquals('one more description', $columns[5]['description']);
+        $this->assertEquals('one more', $columns[7]['title']);
+        $this->assertEquals(3, $columns[7]['task_limit']);
+        $this->assertEquals(8, $columns[7]['position']);
+        $this->assertEquals('one more description', $columns[7]['description']);
     }
 
     public function testUpdateColumn()
@@ -204,7 +199,7 @@ class ColumnModelTest extends Base
 
         $columns = $columnModel->getAll(1);
         $this->assertTrue(is_array($columns));
-        $this->assertEquals(3, count($columns));
+        $this->assertEquals(5, count($columns));
     }
 
     public function testChangePosition()
@@ -263,6 +258,6 @@ class ColumnModelTest extends Base
         $this->assertEquals(2, $columns[2]['id']);
 
         $this->assertFalse($columnModel->changePosition(1, 2, 0));
-        $this->assertFalse($columnModel->changePosition(1, 2, 5));
+        $this->assertFalse($columnModel->changePosition(1, 2, 7));
     }
 }
