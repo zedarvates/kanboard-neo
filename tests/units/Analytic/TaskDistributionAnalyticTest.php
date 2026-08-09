@@ -24,22 +24,22 @@ class TaskDistributionAnalyticTest extends Base
 
         $expected = array(
             array(
-                'column_title' => 'Backlog',
+                'column_title' => 'Triage',
                 'nb_tasks' => 20,
                 'percentage' => 20.0,
             ),
             array(
-                'column_title' => 'Ready',
+                'column_title' => 'Backlog',
                 'nb_tasks' => 30,
                 'percentage' => 30.0,
             ),
             array(
-                'column_title' => 'Work in progress',
+                'column_title' => 'Started',
                 'nb_tasks' => 40,
                 'percentage' => 40.0,
             ),
             array(
-                'column_title' => 'Done',
+                'column_title' => 'In Review',
                 'nb_tasks' => 10,
                 'percentage' => 10.0,
             )
