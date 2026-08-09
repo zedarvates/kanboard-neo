@@ -131,14 +131,19 @@ abstract class Base extends TestCase
         $loader->addPsr4('Kanboard\Plugin\\', PLUGINS_DIR);
         $loader->register();
 
-        // BoardFormatterTest verifies formatter mechanics against its historical
-        // four-column fixture. Keep that fixture explicit instead of coupling
-        // hundreds of formatter assertions to the application's default board.
-        if ($this instanceof \KanboardTests\units\Formatter\BoardFormatterTest) {
+        // These tests verify generic formatter/duplication mechanics against
+        // their historical four-column fixtures. Keep those fixtures explicit
+        // instead of coupling unrelated assertions to the application default.
+        $legacyBoardFixtureClasses = array(
+            \KanboardTests\units\Formatter\BoardFormatterTest::class,
+            \KanboardTests\units\Model\ActionModelTest::class,
+        );
+
+        if (in_array(get_class($this), $legacyBoardFixtureClasses, true)) {
             if (! $this->container['configModel']->save(array(
                 'board_columns' => 'Backlog, Ready, Work in progress, Done',
             ))) {
-                throw new \RuntimeException('Unable to configure BoardFormatterTest columns');
+                throw new \RuntimeException('Unable to configure legacy board fixture');
             }
             $this->container['memoryCache']->flush();
         }
