@@ -137,6 +137,7 @@ abstract class Base extends TestCase
         $legacyBoardFixtureClasses = array(
             \KanboardTests\units\Formatter\BoardFormatterTest::class,
             \KanboardTests\units\Model\ActionModelTest::class,
+            \KanboardTests\units\Model\ProjectDuplicationModelTest::class,
         );
 
         if (in_array(get_class($this), $legacyBoardFixtureClasses, true)) {
