@@ -66,6 +66,19 @@ class UserSessionTest extends Base
         $this->assertTrue($userSession->isLogged());
     }
 
+    public function testGetThemeDefaultsToLinear()
+    {
+        $userSession = new UserSession($this->container);
+
+        $this->assertSame('linear', $userSession->getTheme());
+
+        $_SESSION['user'] = array('id' => 1);
+        $this->assertSame('linear', $userSession->getTheme());
+
+        $_SESSION['user']['theme'] = 'dark';
+        $this->assertSame('dark', $userSession->getTheme());
+    }
+
     public function testIsAdmin()
     {
         $userSession = new UserSession($this->container);
