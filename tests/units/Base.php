@@ -131,6 +131,18 @@ abstract class Base extends TestCase
         $loader->addPsr4('Kanboard\Plugin\\', PLUGINS_DIR);
         $loader->register();
 
+        // BoardFormatterTest verifies formatter mechanics against its historical
+        // four-column fixture. Keep that fixture explicit instead of coupling
+        // hundreds of formatter assertions to the application's default board.
+        if ($this instanceof \KanboardTests\units\Formatter\BoardFormatterTest) {
+            if (! $this->container['configModel']->save(array(
+                'board_columns' => 'Backlog, Ready, Work in progress, Done',
+            ))) {
+                throw new \RuntimeException('Unable to configure BoardFormatterTest columns');
+            }
+            $this->container['memoryCache']->flush();
+        }
+
         $this->container['logger']->debug("Finished setUp() for test $test");
     }
 
