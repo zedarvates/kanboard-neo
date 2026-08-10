@@ -23,8 +23,8 @@ class DashboardControllerTest extends Base
         $projectId = $this->container['projectModel']->create(array('name' => 'Portfolio Cockpit'), 1);
         $this->assertEquals(1, $projectId);
 
-        $reviewColumnId = $this->container['columnModel']->create($projectId, 'In Review');
-        $this->assertNotFalse($reviewColumnId);
+        $reviewColumnId = $this->container['columnModel']->getColumnIdByTitle($projectId, 'In Review');
+        $this->assertGreaterThan(0, $reviewColumnId);
 
         $taskId = $this->container['taskCreationModel']->create(array(
             'project_id' => $projectId,
