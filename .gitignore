@@ -28,3 +28,14 @@ node_modules
 .phpunit.result.cache
 app/version.txt
 .php-cs-fixer.cache
+
+# Machine-local agent and Botte configuration
+.mcp.json
+.botte/config.json
+.botte/setup-report.json
+.claude/settings.json
+
+# Keep portable examples under version control
+!.mcp.example.json
+!.botte/config.example.json
+!.claude/settings.example.json
