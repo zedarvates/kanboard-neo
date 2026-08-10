@@ -20,7 +20,7 @@ class DashboardControllerTest extends Base
         $user = $this->container['userModel']->getById(1);
         $this->container['userSession']->initialize($user);
 
-        $projectId = $this->container['projectModel']->create(array('name' => 'Portfolio Cockpit'), 1);
+        $projectId = $this->container['projectModel']->create(array('name' => 'Portfolio Cockpit'), 1, true);
         $this->assertEquals(1, $projectId);
 
         $reviewColumnId = $this->container['columnModel']->getColumnIdByTitle($projectId, 'In Review');
