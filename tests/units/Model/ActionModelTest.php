@@ -335,7 +335,7 @@ class ActionModelTest extends Base
         $this->assertEquals(2, $actions[0]['project_id']);
         $this->assertEquals('\Kanboard\Action\TaskDuplicateAnotherProject', $actions[0]['action_name']);
         $this->assertEquals(TaskModel::EVENT_CLOSE, $actions[0]['event_name']);
-        $this->assertEquals(array('column_id' => 5, 'project_id' => 3), $actions[0]['params']);
+        $this->assertEquals(array('column_id' => 7, 'project_id' => 3), $actions[0]['params']);
     }
 
     public function testDuplicateWithProjectParameterIdenticalToDestination()
@@ -389,7 +389,7 @@ class ActionModelTest extends Base
         $this->assertEquals(2, $actions[0]['project_id']);
         $this->assertEquals('\Kanboard\Action\TaskAssignSpecificUser', $actions[0]['action_name']);
         $this->assertEquals(TaskModel::EVENT_MOVE_COLUMN, $actions[0]['event_name']);
-        $this->assertEquals(array('column_id' => 5, 'user_id' => 2), $actions[0]['params']);
+        $this->assertEquals(array('column_id' => 7, 'user_id' => 2), $actions[0]['params']);
     }
 
     public function testDuplicateWithUserParameterButNotAssignable()
@@ -474,7 +474,7 @@ class ActionModelTest extends Base
         $this->assertEquals(2, $actions[0]['project_id']);
         $this->assertEquals('\Kanboard\Action\TaskAssignColorCategory', $actions[0]['action_name']);
         $this->assertEquals(TaskModel::EVENT_CREATE_UPDATE, $actions[0]['event_name']);
-        $this->assertEquals(array('column_id' => 5, 'category_id' => 2), $actions[0]['params']);
+        $this->assertEquals(array('column_id' => 7, 'category_id' => 2), $actions[0]['params']);
     }
 
     public function testDuplicateWithCategoryParameterButDifferentName()
