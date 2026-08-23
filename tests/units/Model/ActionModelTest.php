@@ -246,7 +246,7 @@ class ActionModelTest extends Base
         $this->assertEquals(2, $actions[0]['project_id']);
         $this->assertEquals('\Kanboard\Action\TaskAssignColorColumn', $actions[0]['action_name']);
         $this->assertEquals(TaskModel::EVENT_CREATE, $actions[0]['event_name']);
-        $this->assertEquals(array('column_id' => 5, 'color_id' => 'red'), $actions[0]['params']);
+        $this->assertEquals(array('column_id' => 7, 'color_id' => 'red'), $actions[0]['params']);
     }
 
     public function testDuplicateWithColumnsParameter()
@@ -272,7 +272,7 @@ class ActionModelTest extends Base
         $this->assertEquals(2, $actions[0]['project_id']);
         $this->assertEquals('\Kanboard\Action\TaskAssignColorColumn', $actions[0]['action_name']);
         $this->assertEquals(TaskModel::EVENT_CREATE, $actions[0]['event_name']);
-        $this->assertEquals(array('src_column_id' => 5, 'dst_column_id' => 6, 'dest_column_id' => 7), $actions[0]['params']);
+        $this->assertEquals(array('src_column_id' => 7, 'dst_column_id' => 8, 'dest_column_id' => 9), $actions[0]['params']);
     }
 
     public function testDuplicateWithColumnParameterNotfound()
@@ -308,7 +308,7 @@ class ActionModelTest extends Base
         $this->assertEquals(2, $actions[0]['project_id']);
         $this->assertEquals('\Kanboard\Action\TaskAssignColorColumn', $actions[0]['action_name']);
         $this->assertEquals(TaskModel::EVENT_CREATE, $actions[0]['event_name']);
-        $this->assertEquals(array('column_id' => 5, 'color_id' => 'red'), $actions[0]['params']);
+        $this->assertEquals(array('column_id' => 7, 'color_id' => 'red'), $actions[0]['params']);
     }
 
     public function testDuplicateWithProjectParameter()
