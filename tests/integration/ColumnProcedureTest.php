@@ -20,8 +20,11 @@ class ColumnProcedureTest extends BaseProcedureTest
     public function assertGetColumns()
     {
         $this->columns = $this->app->getColumns($this->projectId);
-        $this->assertCount(4, $this->columns);
-        $this->assertEquals('Done', $this->columns[3]['title']);
+        $this->assertCount(6, $this->columns);
+        $this->assertSame(
+            array('Triage', 'Backlog', 'Started', 'In Review', 'Done', 'Canceled'),
+            array_column($this->columns, 'title')
+        );
     }
 
     public function assertUpdateColumn()
@@ -40,8 +43,8 @@ class ColumnProcedureTest extends BaseProcedureTest
         $this->assertTrue($column_id > 0);
 
         $this->columns = $this->app->getColumns($this->projectId);
-        $this->assertCount(5, $this->columns);
-        $this->assertEquals('New column', $this->columns[4]['title']);
+        $this->assertCount(7, $this->columns);
+        $this->assertEquals('New column', $this->columns[6]['title']);
     }
 
     public function assertRemoveColumn()
@@ -49,7 +52,11 @@ class ColumnProcedureTest extends BaseProcedureTest
         $this->assertTrue($this->app->removeColumn($this->columns[3]['id']));
 
         $this->columns = $this->app->getColumns($this->projectId);
-        $this->assertCount(4, $this->columns);
+        $this->assertCount(6, $this->columns);
+        $this->assertSame(
+            array('Triage', 'Backlog', 'Started', 'Done', 'Canceled', 'New column'),
+            array_column($this->columns, 'title')
+        );
     }
 
     public function assertChangeColumnPosition()
@@ -57,14 +64,13 @@ class ColumnProcedureTest extends BaseProcedureTest
         $this->assertTrue($this->app->changeColumnPosition($this->projectId, $this->columns[0]['id'], 3));
 
         $this->columns = $this->app->getColumns($this->projectId);
-        $this->assertEquals('Ready', $this->columns[0]['title']);
-        $this->assertEquals(1, $this->columns[0]['position']);
-        $this->assertEquals('Work in progress', $this->columns[1]['title']);
-        $this->assertEquals(2, $this->columns[1]['position']);
-        $this->assertEquals('Backlog', $this->columns[2]['title']);
-        $this->assertEquals(3, $this->columns[2]['position']);
-        $this->assertEquals('New column', $this->columns[3]['title']);
-        $this->assertEquals(4, $this->columns[3]['position']);
+        $this->assertSame(
+            array('Backlog', 'Started', 'Triage', 'Done', 'Canceled', 'New column'),
+            array_column($this->columns, 'title')
+        );
+        foreach ($this->columns as $index => $column) {
+            $this->assertEquals($index + 1, $column['position']);
+        }
     }
 
     public function testChangeColumnPositionCannotModifyColumnFromAnotherProjectWithForgedProjectId()
