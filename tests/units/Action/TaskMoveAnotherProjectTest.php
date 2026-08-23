@@ -5,6 +5,7 @@ namespace KanboardTests\units\Action;
 use KanboardTests\units\Base;
 use Kanboard\Event\GenericEvent;
 use Kanboard\Event\TaskEvent;
+use Kanboard\Model\ColumnModel;
 use Kanboard\Model\TaskModel;
 use Kanboard\Model\TaskFinderModel;
 use Kanboard\Model\TaskCreationModel;
@@ -16,6 +17,7 @@ class TaskMoveAnotherProjectTest extends Base
     public function testSuccess()
     {
         $projectModel = new ProjectModel($this->container);
+        $columnModel = new ColumnModel($this->container);
         $taskCreationModel = new TaskCreationModel($this->container);
         $taskFinderModel = new TaskFinderModel($this->container);
 
@@ -42,7 +44,7 @@ class TaskMoveAnotherProjectTest extends Base
         $this->assertNotEmpty($task);
         $this->assertEquals('test', $task['title']);
         $this->assertEquals(2, $task['project_id']);
-        $this->assertEquals(5, $task['column_id']);
+        $this->assertEquals($columnModel->getFirstColumnId(2), $task['column_id']);
     }
 
     public function testWithWrongColumn()
