@@ -7,6 +7,7 @@ on:
       - 'v*.*.*'
   pull_request:
     branches: [ main ]
+
 jobs:
   test-image-build:
     if: github.event.pull_request
@@ -24,6 +25,7 @@ jobs:
   multiplatform-build:
     if: ${{ ! github.event.pull_request }}
     permissions:
+      contents: read
       packages: write
     runs-on: ubuntu-latest
     steps:
@@ -34,12 +36,12 @@ jobs:
         id: docker_metadata
         uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
         with:
+          # GHCR is the always-available publication target because this workflow can
+          # authenticate with the repository-scoped GITHUB_TOKEN. DockerHub and Quay
+          # must only be re-enabled once their explicit repository secrets exist.
           images: |
-            docker.io/${{ github.repository_owner }}/kanboard
             ghcr.io/${{ github.repository_owner }}/kanboard
-            quay.io/${{ github.repository_owner }}/kanboard
           tags: |
-            type=ref,event=pr
             type=schedule,pattern=nightly
             type=semver,pattern={{raw}}
 
@@ -49,33 +51,20 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4.2.0
 
-      - name: Login to DockerHub
-        uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4.4.0
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
       - name: Login to GitHub Container Registry
         uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4.4.0
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
+          username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Login to Quay.io Registry
-        uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4.4.0
-        with:
-          registry: quay.io
-          username: ${{ secrets.QUAY_USERNAME }}
-          password: ${{ secrets.QUAY_TOKEN }}
-
-      - name: Build and push
+      - name: Build and push to GHCR
         uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
         with:
           context: .
           file: Dockerfile
           platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           build-args: |
             VERSION=${{ steps.docker_metadata.outputs.version }}
           tags: ${{ steps.docker_metadata.outputs.tags }}
