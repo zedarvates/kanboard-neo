@@ -6,6 +6,11 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+if ($env:KANBOARD_AUTOSTART -eq "0") {
+    Write-Host "Kanboard Neo autostart is disabled for this session."
+    exit 0
+}
+
 function Test-KanboardHealth {
     try {
         $response = Invoke-WebRequest -Uri $HealthUrl -UseBasicParsing -TimeoutSec 3
