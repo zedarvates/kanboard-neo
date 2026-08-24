@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+if [[ "${KANBOARD_AUTOSTART:-1}" == "0" ]]; then
+  echo "Kanboard Neo autostart is disabled for this session."
+  exit 0
+fi
+
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 HEALTH_URL="${KANBOARD_HEALTH_URL:-http://127.0.0.1/healthcheck.php}"
