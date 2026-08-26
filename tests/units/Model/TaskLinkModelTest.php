@@ -162,7 +162,7 @@ class TaskLinkModelTest extends Base
         $this->assertArrayHasKey('blocks', $links);
         $this->assertCount(2, $links['blocks']);
         $this->assertEquals('test', $links['blocks'][0]['project_name']);
-        $this->assertEquals('Backlog', $links['blocks'][0]['column_title']);
+        $this->assertEquals('Triage', $links['blocks'][0]['column_title']);
         $this->assertEquals('blocks', $links['blocks'][0]['label']);
     }
 

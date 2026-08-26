@@ -29,13 +29,19 @@ class TaskPositionModelTest extends Base
         $this->assertEquals(0, $taskModel->getProgress($taskFinderModel->getById(1), $columnModel->getList(1)));
 
         $this->assertTrue($taskPositionModel->movePosition(1, 1, 2, 1));
-        $this->assertEquals(25, $taskModel->getProgress($taskFinderModel->getById(1), $columnModel->getList(1)));
+        $this->assertEquals(16.7, $taskModel->getProgress($taskFinderModel->getById(1), $columnModel->getList(1)));
 
         $this->assertTrue($taskPositionModel->movePosition(1, 1, 3, 1));
-        $this->assertEquals(50, $taskModel->getProgress($taskFinderModel->getById(1), $columnModel->getList(1)));
+        $this->assertEquals(33.3, $taskModel->getProgress($taskFinderModel->getById(1), $columnModel->getList(1)));
 
         $this->assertTrue($taskPositionModel->movePosition(1, 1, 4, 1));
-        $this->assertEquals(75, $taskModel->getProgress($taskFinderModel->getById(1), $columnModel->getList(1)));
+        $this->assertEquals(50, $taskModel->getProgress($taskFinderModel->getById(1), $columnModel->getList(1)));
+
+        $this->assertTrue($taskPositionModel->movePosition(1, 1, 5, 1));
+        $this->assertEquals(66.7, $taskModel->getProgress($taskFinderModel->getById(1), $columnModel->getList(1)));
+
+        $this->assertTrue($taskPositionModel->movePosition(1, 1, 6, 1));
+        $this->assertEquals(83.3, $taskModel->getProgress($taskFinderModel->getById(1), $columnModel->getList(1)));
 
         $this->assertTrue($taskStatusModel->close(1));
         $this->assertEquals(100, $taskModel->getProgress($taskFinderModel->getById(1), $columnModel->getList(1)));
