@@ -11,11 +11,11 @@
 <p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-c7e66d?labelColor=0d332b"></a>
   <img alt="Status: active development" src="https://img.shields.io/badge/status-active%20development-f4f1e8?labelColor=0d332b">
-  <img alt="Release: private preview v26" src="https://img.shields.io/badge/private%20preview-v26-b8a4d8?labelColor=0d332b">
+  <img alt="Release: private preview v27" src="https://img.shields.io/badge/private%20preview-v27-b8a4d8?labelColor=0d332b">
 </p>
 
 > [!IMPORTANT]
-> **Repository transition:** the documentation below describes the deployed Kanboard Neo v26 private preview; the current screenshots show the v25 dashboard before the artistic-projects tab was added. This repository still contains its historical Kanboard base while the new agentic codebase is migrated in controlled milestones. Do not treat the current `main` branch as a ready-to-install v26 package yet.
+> **Repository transition:** the documentation below describes the deployed Kanboard Neo v27 private preview; the current screenshots show the v25 dashboard before the artistic-projects and marketing tabs were added. This repository still contains its historical Kanboard base while the new agentic codebase is migrated in controlled milestones. Do not treat the current `main` branch as a ready-to-install v27 package yet.
 
 ## Why Kanboard Neo?
 
@@ -34,6 +34,8 @@ It is designed as a shared operating surface for a human owner, Codex, local age
 | Daily decisions | Portfolio brief, proposed decisions, risks, blockers, weekly focus and active-project signals |
 | Projects & GitHub | Active-project registry and idempotent repository import without silently deleting missing repositories |
 | Artistic projects | Dedicated portfolio for StoryCore, BD/webtoon, Zed Giller Musics, the book, Monstericor and physical creations, linked to tasks and Asset Factory outputs |
+| Marketing & community | Campaigns, channel tracking, approval-gated editorial queue and reusable content planning for X, YouTube, Reddit, Discord and optional platforms |
+| Ultimate Odycer onboarding | Preconfigured client projects sourced from the five public UltOd client templates, including compatibility gates, media tasks, community channels and a draft launch campaign |
 | Second Brain | Knowledge inbox, source provenance, Obsidian navigation, backlinks, anti-duplicate checks and quick indexes |
 | Research | Whiteboards, moodboards and a benchmarkable k-NN use-case registry for Fovea Engine, Ultimate Odycer and other projects |
 | Asset Factory | Project assets linked to tasks, Codex discussions, provenance and delivery status |
@@ -105,6 +107,7 @@ Default economic routing is: resident local model → suitable OpenRouter free r
 - Free or remote model output never bypasses tests and an independent gate.
 - Difficult-task fusion means independent proposals plus an evidence-based arbiter—not weight merging or majority voting.
 - Publishing, production deployment, payment, legal acceptance and permission expansion remain owner-gated.
+- Social-account connection, external replies, advertising spend and publication remain owner-gated; marketing records do not imply an active platform API connection.
 - Automated knowledge capture stays in an inbox until explicit promotion into the wiki.
 
 ## Near-term roadmap
