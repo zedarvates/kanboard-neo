@@ -11,11 +11,11 @@
 <p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-c7e66d?labelColor=0d332b"></a>
   <img alt="Status: active development" src="https://img.shields.io/badge/status-active%20development-f4f1e8?labelColor=0d332b">
-  <img alt="Release: private preview v25" src="https://img.shields.io/badge/private%20preview-v25-b8a4d8?labelColor=0d332b">
+  <img alt="Release: private preview v26" src="https://img.shields.io/badge/private%20preview-v26-b8a4d8?labelColor=0d332b">
 </p>
 
 > [!IMPORTANT]
-> **Repository transition:** the screenshots and documentation below describe the deployed Kanboard Neo v25 private preview. This repository still contains its historical Kanboard base while the new agentic codebase is migrated in controlled milestones. Do not treat the current `main` branch as a ready-to-install v25 package yet.
+> **Repository transition:** the documentation below describes the deployed Kanboard Neo v26 private preview; the current screenshots show the v25 dashboard before the artistic-projects tab was added. This repository still contains its historical Kanboard base while the new agentic codebase is migrated in controlled milestones. Do not treat the current `main` branch as a ready-to-install v26 package yet.
 
 ## Why Kanboard Neo?
 
@@ -33,6 +33,7 @@ It is designed as a shared operating surface for a human owner, Codex, local age
 | Model routing | Local-first routing, free-provider discovery, quota/credit awareness, time-window scheduling and bounded fusion mode |
 | Daily decisions | Portfolio brief, proposed decisions, risks, blockers, weekly focus and active-project signals |
 | Projects & GitHub | Active-project registry and idempotent repository import without silently deleting missing repositories |
+| Artistic projects | Dedicated portfolio for StoryCore, BD/webtoon, Zed Giller Musics, the book, Monstericor and physical creations, linked to tasks and Asset Factory outputs |
 | Second Brain | Knowledge inbox, source provenance, Obsidian navigation, backlinks, anti-duplicate checks and quick indexes |
 | Research | Whiteboards, moodboards and a benchmarkable k-NN use-case registry for Fovea Engine, Ultimate Odycer and other projects |
 | Asset Factory | Project assets linked to tasks, Codex discussions, provenance and delivery status |
@@ -76,6 +77,19 @@ Kanboard Neo deliberately avoids becoming a monolith:
 - **Botte Secrète** remains responsible for local-first checkups, policy, compliance, malicious-input scanning, grounding, model health and secure context preparation.
 - **OCX** remains responsible for normalized execution of authorized commands.
 - **Kanboard Neo** remains the source of truth for missions, ownership, reinforcements, receipts, budgets, knowledge links and outcomes.
+
+## Odin, Botte Secrète, OCX and OpenCode integration
+
+The interfaces are deliberately separated so a dashboard cannot silently become a shell or a policy engine. The status below distinguishes implemented contracts from end-to-end runtime activation:
+
+| Component | Responsibility | Current v26 status |
+| --- | --- | --- |
+| **Odin Codex** | Prioritize, delegate, choose model/runtime, enforce budgets and request gates | Queue, handoffs, durable receipts, bridge and Windows scheduled-task templates implemented; local unattended activation still has to be verified on Odin PC |
+| **Botte Secrète** | Local-first checks, context preparation, security policy, drift/model health and structural inefficiency analysis | Ownership boundary, Relay role and structural-efficiency contract implemented; the local Botte Secrète runtime remains authoritative and is not duplicated inside the Site |
+| **OCX** | Execute authorized commands, tests and bounded repairs | Arc/Volt executor roles and bridge boundary implemented; actual command execution remains local and requires the OCX runtime to be available |
+| **OpenCode** | Provide an additional configured model/router path | Included in Odin capabilities and the economic routing order; provider discovery, quota health and failover still require end-to-end validation |
+
+Default economic routing is: resident local model → suitable OpenRouter free route → configured OpenCode/router → paid remote model. External routes never bypass classification, tests, evidence or the independent gate.
 
 ## Architecture of the deployed preview
 
