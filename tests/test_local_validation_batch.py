@@ -38,13 +38,42 @@ def test_run_reports_blocked_when_executable_missing(tmp_path):
     assert result["returncode"] is None
 
 
-def test_find_repo_prefers_explicit_environment(tmp_path, monkeypatch):
+def test_find_repo_prefers_target_specific_environment(tmp_path, monkeypatch):
     module = _load_module()
     explicit = tmp_path / "explicit"
     explicit.mkdir()
-    monkeypatch.setenv("STORYCORE_REPO", str(explicit))
     target = module.TARGETS[0]
+    monkeypatch.setenv(target.repo_env, str(explicit))
     assert module._find_repo(target, [tmp_path / "other"]) == explicit.resolve()
+
+
+def test_validate_ref_accepts_expected_clean_branch():
+    module = _load_module()
+    target = module.TARGETS[0]
+    assert module._validate_ref(
+        target,
+        {"branch": target.expected_branch, "sha": "abc", "dirty": False},
+    ) is None
+
+
+def test_validate_ref_blocks_wrong_branch():
+    module = _load_module()
+    target = module.TARGETS[0]
+    reason = module._validate_ref(
+        target,
+        {"branch": "main", "sha": "abc", "dirty": False},
+    )
+    assert reason is not None
+    assert reason.startswith("wrong_branch:")
+
+
+def test_validate_ref_blocks_dirty_worktree():
+    module = _load_module()
+    target = module.TARGETS[0]
+    assert module._validate_ref(
+        target,
+        {"branch": target.expected_branch, "sha": "abc", "dirty": True},
+    ) == "worktree_dirty"
 
 
 def test_git_head_is_read_only_for_non_git_directory(tmp_path):
