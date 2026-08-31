@@ -19,7 +19,11 @@ class BoardProcedureTest extends BaseProcedureTest
         $this->assertCount(1, $board);
         $this->assertEquals('Default swimlane', $board[0]['name']);
 
-        $this->assertCount(4, $board[0]['columns']);
-        $this->assertEquals('Ready', $board[0]['columns'][1]['title']);
+        $this->assertCount(6, $board[0]['columns']);
+
+        $expectedTitles = array('Triage', 'Backlog', 'Started', 'In Review', 'Done', 'Canceled');
+        foreach ($expectedTitles as $index => $title) {
+            $this->assertEquals($title, $board[0]['columns'][$index]['title']);
+        }
     }
 }

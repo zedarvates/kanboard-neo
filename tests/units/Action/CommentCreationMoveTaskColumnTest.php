@@ -2,13 +2,13 @@
 
 namespace KanboardTests\units\Action;
 
-use KanboardTests\units\Base;
 use Kanboard\Event\TaskEvent;
 use Kanboard\Model\TaskModel;
 use Kanboard\Model\TaskCreationModel;
 use Kanboard\Model\CommentModel;
 use Kanboard\Model\ProjectModel;
 use Kanboard\Action\CommentCreationMoveTaskColumn;
+use KanboardTests\units\Base;
 
 class CommentCreationMoveTaskColumnTest extends Base
 {
@@ -35,7 +35,7 @@ class CommentCreationMoveTaskColumnTest extends Base
         $this->assertNotEmpty($comment);
         $this->assertEquals(1, $comment['task_id']);
         $this->assertEquals(1, $comment['user_id']);
-        $this->assertEquals('Moved to column Ready', $comment['comment']);
+        $this->assertEquals('Moved to column Backlog', $comment['comment']);
     }
 
     public function testWithUserNotLogged()

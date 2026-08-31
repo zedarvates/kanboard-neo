@@ -131,6 +131,30 @@ abstract class Base extends TestCase
         $loader->addPsr4('Kanboard\Plugin\\', PLUGINS_DIR);
         $loader->register();
 
+        // These tests verify generic formatter/finder/link/position/duplication/
+        // move mechanics against historical four-column fixtures. Keep those
+        // fixtures explicit instead of coupling unrelated assertions to the
+        // application default.
+        $legacyBoardFixtureClasses = array(
+            \KanboardTests\units\Formatter\BoardFormatterTest::class,
+            \KanboardTests\units\Model\ActionModelTest::class,
+            \KanboardTests\units\Model\ProjectDuplicationModelTest::class,
+            \KanboardTests\units\Model\TaskFinderModelTest::class,
+            \KanboardTests\units\Model\TaskLinkModelTest::class,
+            \KanboardTests\units\Model\TaskPositionModelTest::class,
+            \KanboardTests\units\Model\TaskProjectDuplicationModelTest::class,
+            \KanboardTests\units\Model\TaskProjectMoveModelTest::class,
+        );
+
+        if (in_array(get_class($this), $legacyBoardFixtureClasses, true)) {
+            if (! $this->container['configModel']->save(array(
+                'board_columns' => 'Backlog, Ready, Work in progress, Done',
+            ))) {
+                throw new \RuntimeException('Unable to configure legacy board fixture');
+            }
+            $this->container['memoryCache']->flush();
+        }
+
         $this->container['logger']->debug("Finished setUp() for test $test");
     }
 
