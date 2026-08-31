@@ -1,0 +1,47 @@
+name: Self-hosted runner smoke test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  eurekai-smoke:
+    runs-on: [self-hosted, linux, x64, eurekai]
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Host diagnostics
+        shell: bash
+        run: |
+          set -euxo pipefail
+          uname -a
+          id
+          df -h
+          free -h || true
+
+      - name: Verify Docker
+        shell: bash
+        run: |
+          set -euxo pipefail
+          docker version
+          docker info
+          docker buildx version
+
+      - name: Verify required tooling
+        shell: bash
+        run: |
+          set -euxo pipefail
+          git --version
+          php --version || true
+          composer --version || true
+
+      - name: Docker smoke build
+        shell: bash
+        run: |
+          set -euxo pipefail
+          docker build -t kanboard-neo:self-hosted-smoke -f Dockerfile .
+          docker image inspect kanboard-neo:self-hosted-smoke >/dev/null
