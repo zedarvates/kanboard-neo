@@ -5,8 +5,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"/usr/bin/python3\" -m skills.preflight.hook",
-            "cwd": "/home/redgamer/projects/botte-secrete"
+            "command": "python -m skills.preflight.hook",
+            "cwd": "<absolute-path-to-botte-secrete>"
           }
         ]
       }
