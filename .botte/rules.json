@@ -1,0 +1,86 @@
+{
+  "schema": "botte.rules-manifest/v1",
+  "rules": [
+    {
+      "id": "board.default-columns",
+      "action": "board-project-create",
+      "effect": "REQUIRE",
+      "scope": ["new-project"],
+      "statement": "New projects must default to the ordered columns Triage, Backlog, Started, In Review, Done, and Canceled.",
+      "source_ref": ".botte/policy.md#New projects must default to the ordered columns",
+      "owner_only": false,
+      "enforced": true,
+      "enforcement_refs": [
+        "app/Model/BoardModel.php#return array(t('Triage'), t('Backlog'), t('Started'), t('In Review'), t('Done'), t('Canceled'));"
+      ],
+      "probes": [
+        {
+          "id": "board.default-columns.allow-current-order",
+          "polarity": "allow",
+          "evidence_ref": "tests/integration/BoardProcedureTest.php#array('Triage', 'Backlog', 'Started', 'In Review', 'Done', 'Canceled')"
+        },
+        {
+          "id": "board.default-columns.deny-historical-count",
+          "polarity": "deny",
+          "evidence_ref": "tests/integration/BoardProcedureTest.php#$this->assertCount(6, $board[0]['columns']);"
+        }
+      ],
+      "supersedes": [],
+      "last_verified": {
+        "at": "2026-09-07T03:00:00+00:00",
+        "content_sha256": "b0278c5918d032ded757c2de22c01fe6e658de8507d45ff7f5e8995221af327b",
+        "evidence_ref": "tests/integration/BoardProcedureTest.php#array('Triage', 'Backlog', 'Started', 'In Review', 'Done', 'Canceled')"
+      }
+    },
+    {
+      "id": "board.move-comment-authenticated",
+      "action": "create-move-comment",
+      "effect": "REQUIRE",
+      "scope": ["task-column-move"],
+      "statement": "A move-column comment must be denied without a logged-in user and, when allowed, must record the resolved destination column title.",
+      "source_ref": ".botte/policy.md#A move-column comment must be denied",
+      "owner_only": false,
+      "enforced": true,
+      "enforcement_refs": [
+        "app/Action/CommentCreationMoveTaskColumn.php#if (! $this->userSession->isLogged())",
+        "app/Action/CommentCreationMoveTaskColumn.php#$column = $this->columnModel->getById($data['task']['column_id']);"
+      ],
+      "probes": [
+        {
+          "id": "board.move-comment-authenticated.allow-resolved-title",
+          "polarity": "allow",
+          "evidence_ref": "tests/units/Action/CommentCreationMoveTaskColumnTest.php#$this->assertEquals('Moved to column Backlog', $comment['comment']);"
+        },
+        {
+          "id": "board.move-comment-authenticated.deny-anonymous",
+          "polarity": "deny",
+          "evidence_ref": "tests/units/Action/CommentCreationMoveTaskColumnTest.php#$this->assertFalse($action->execute($event, TaskModel::EVENT_MOVE_COLUMN));"
+        }
+      ],
+      "supersedes": [],
+      "last_verified": {
+        "at": "2026-09-07T03:00:00+00:00",
+        "content_sha256": "ce68a12cef699d79fd4bf5a8660e722115cb8823f21f192cf3fe252abec02dd6",
+        "evidence_ref": "tests/units/Action/CommentCreationMoveTaskColumnTest.php#$this->assertFalse($action->execute($event, TaskModel::EVENT_MOVE_COLUMN));"
+      }
+    },
+    {
+      "id": "authority.owner-external-transitions",
+      "action": "external-transition",
+      "effect": "DENY",
+      "scope": ["publication", "production-deployment", "payment", "legal-acceptance", "permission-expansion"],
+      "statement": "Publishing, production deployment, payment, legal acceptance and permission expansion remain owner-gated.",
+      "source_ref": ".botte/policy.md#Publishing, production deployment, payment, legal acceptance and permission expansion remain owner-gated.",
+      "owner_only": true,
+      "enforced": false,
+      "enforcement_refs": [],
+      "probes": [],
+      "supersedes": [],
+      "last_verified": {
+        "at": "2026-09-07T03:00:00+00:00",
+        "content_sha256": "ade75899f3639352d728bc474ce7c2f36918d28fb5b79059dd373ee84aa0fce3",
+        "evidence_ref": "README.md#Publishing, production deployment, payment, legal acceptance and permission expansion remain owner-gated."
+      }
+    }
+  ]
+}
