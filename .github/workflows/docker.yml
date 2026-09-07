@@ -22,7 +22,7 @@ jobs:
           push: false
 
   multiplatform-build:
-    if: ${{ ! github.event.pull_request }}
+    if: ${{ github.event_name != 'pull_request' && github.actor == github.repository_owner }}
     permissions:
       packages: write
     runs-on: ubuntu-latest

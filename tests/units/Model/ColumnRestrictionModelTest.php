@@ -47,7 +47,7 @@ class ColumnRestrictionModelTest extends Base
         $this->assertEquals(ColumnRestrictionModel::RULE_ALLOW_TASK_CREATION, $restriction['rule']);
         $this->assertEquals(1, $restriction['project_id']);
         $this->assertEquals(1, $restriction['restriction_id']);
-        $this->assertEquals('Ready', $restriction['column_title']);
+        $this->assertEquals('Backlog', $restriction['column_title']);
     }
 
     public function testGetAll()
@@ -67,7 +67,7 @@ class ColumnRestrictionModelTest extends Base
         $this->assertEquals(1, $restrictions[0]['restriction_id']);
         $this->assertEquals(1, $restrictions[0]['role_id']);
         $this->assertEquals(2, $restrictions[0]['column_id']);
-        $this->assertEquals('Ready', $restrictions[0]['column_title']);
+        $this->assertEquals('Backlog', $restrictions[0]['column_title']);
     }
 
     public function testGetByRole()
