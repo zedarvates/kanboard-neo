@@ -8,6 +8,7 @@ use Kanboard\Event\TaskEvent;
 use Kanboard\Model\TaskModel;
 use Kanboard\Model\TaskFinderModel;
 use Kanboard\Model\TaskCreationModel;
+use Kanboard\Model\ColumnModel;
 use Kanboard\Model\ProjectModel;
 use Kanboard\Action\TaskMoveAnotherProject;
 
@@ -18,6 +19,7 @@ class TaskMoveAnotherProjectTest extends Base
         $projectModel = new ProjectModel($this->container);
         $taskCreationModel = new TaskCreationModel($this->container);
         $taskFinderModel = new TaskFinderModel($this->container);
+        $columnModel = new ColumnModel($this->container);
 
         $this->assertEquals(1, $projectModel->create(array('name' => 'test1')));
         $this->assertEquals(2, $projectModel->create(array('name' => 'test2')));
@@ -42,7 +44,7 @@ class TaskMoveAnotherProjectTest extends Base
         $this->assertNotEmpty($task);
         $this->assertEquals('test', $task['title']);
         $this->assertEquals(2, $task['project_id']);
-        $this->assertEquals(5, $task['column_id']);
+        $this->assertEquals($columnModel->getFirstColumnId(2), $task['column_id']);
     }
 
     public function testWithWrongColumn()
