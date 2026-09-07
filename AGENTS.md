@@ -9,7 +9,9 @@ edit freely.)
 - Build the local container image (requires Docker Buildx): `make docker-image`
 - Default local test suite: `make test-sqlite`
 - Database-specific suites: `make test-mysql` and `make test-postgres` require their corresponding database services.
-- Lint: no canonical repository lint target is currently defined; do not invent or report one as passing.
+- JavaScript lint: `npm install -g jshint`, then `jshint ./assets/js/core ./assets/js/components`
+- PHP style check: CI runs `ghcr.io/php-cs-fixer/php-cs-fixer:3-php8.4` with `check --diff --verbose --show-progress none`.
+- There is no single Make lint target; report the JavaScript and PHP checks separately.
 
 ## Conventions
 - Prefer the smallest change that works; don't cut validation, error handling,
