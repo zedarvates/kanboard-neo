@@ -49,9 +49,9 @@ class BoardFormatterTest extends Base
 
         $this->assertSame(1, $board[0]['id']);
         $this->assertEquals('Default swimlane', $board[0]['name']);
-        $this->assertCount(4, $board[0]['columns']);
+        $this->assertCount(6, $board[0]['columns']);
         $this->assertEquals(3, $board[0]['nb_swimlanes']);
-        $this->assertEquals(4, $board[0]['nb_columns']);
+        $this->assertEquals(6, $board[0]['nb_columns']);
         $this->assertEquals(6, $board[0]['nb_tasks']);
         $this->assertEquals(10, $board[0]['score']);
         $this->assertSame(1, $board[0]['columns'][0]['id']);
@@ -88,9 +88,9 @@ class BoardFormatterTest extends Base
 
         $this->assertSame(2, $board[1]['id']);
         $this->assertEquals('Swimlane 1', $board[1]['name']);
-        $this->assertCount(4, $board[1]['columns']);
+        $this->assertCount(6, $board[1]['columns']);
         $this->assertEquals(3, $board[1]['nb_swimlanes']);
-        $this->assertEquals(4, $board[1]['nb_columns']);
+        $this->assertEquals(6, $board[1]['nb_columns']);
         $this->assertEquals(1, $board[1]['nb_tasks']);
         $this->assertEquals(2, $board[1]['score']);
 
@@ -107,9 +107,9 @@ class BoardFormatterTest extends Base
         $this->assertEquals('Task 7', $board[1]['columns'][2]['tasks'][0]['title']);
 
         $this->assertEquals('Swimlane 2', $board[2]['name']);
-        $this->assertCount(4, $board[2]['columns']);
+        $this->assertCount(6, $board[2]['columns']);
         $this->assertEquals(3, $board[2]['nb_swimlanes']);
-        $this->assertEquals(4, $board[2]['nb_columns']);
+        $this->assertEquals(6, $board[2]['nb_columns']);
         $this->assertEquals(1, $board[2]['nb_tasks']);
         $this->assertEquals(3, $board[2]['score']);
 
@@ -330,9 +330,9 @@ class BoardFormatterTest extends Base
         $this->assertCount(2, $board);
 
         $this->assertEquals('Swimlane 1', $board[0]['name']);
-        $this->assertCount(4, $board[0]['columns']);
+        $this->assertCount(6, $board[0]['columns']);
         $this->assertEquals(2, $board[0]['nb_swimlanes']);
-        $this->assertEquals(4, $board[0]['nb_columns']);
+        $this->assertEquals(6, $board[0]['nb_columns']);
         $this->assertEquals(2, $board[0]['nb_tasks']);
         $this->assertEquals(1, $board[0]['score']);
 
@@ -360,9 +360,9 @@ class BoardFormatterTest extends Base
         $this->assertEquals('Task 3', $board[0]['columns'][1]['tasks'][0]['title']);
 
         $this->assertEquals('Swimlane 2', $board[1]['name']);
-        $this->assertCount(4, $board[1]['columns']);
+        $this->assertCount(6, $board[1]['columns']);
         $this->assertEquals(2, $board[1]['nb_swimlanes']);
-        $this->assertEquals(4, $board[1]['nb_columns']);
+        $this->assertEquals(6, $board[1]['nb_columns']);
         $this->assertEquals(2, $board[1]['nb_tasks']);
         $this->assertEquals(0, $board[1]['score']);
 
@@ -408,6 +408,8 @@ class BoardFormatterTest extends Base
         $this->assertTrue($columnModel->remove(2));
         $this->assertTrue($columnModel->remove(3));
         $this->assertTrue($columnModel->remove(4));
+        $this->assertTrue($columnModel->remove(5));
+        $this->assertTrue($columnModel->remove(6));
 
         $board = BoardFormatter::getInstance($this->container)
             ->withQuery($taskFinderModel->getExtendedQuery())
@@ -435,9 +437,9 @@ class BoardFormatterTest extends Base
         $this->assertCount(3, $board);
 
         $this->assertEquals('Default swimlane', $board[0]['name']);
-        $this->assertCount(4, $board[0]['columns']);
+        $this->assertCount(6, $board[0]['columns']);
         $this->assertEquals(3, $board[0]['nb_swimlanes']);
-        $this->assertEquals(4, $board[0]['nb_columns']);
+        $this->assertEquals(6, $board[0]['nb_columns']);
         $this->assertEquals(0, $board[0]['nb_tasks']);
         $this->assertEquals(0, $board[0]['score']);
 
@@ -462,9 +464,9 @@ class BoardFormatterTest extends Base
         $this->assertSame(0, $board[0]['columns'][3]['nb_tasks']);
 
         $this->assertEquals('Swimlane 1', $board[1]['name']);
-        $this->assertCount(4, $board[1]['columns']);
+        $this->assertCount(6, $board[1]['columns']);
         $this->assertEquals(3, $board[1]['nb_swimlanes']);
-        $this->assertEquals(4, $board[1]['nb_columns']);
+        $this->assertEquals(6, $board[1]['nb_columns']);
         $this->assertEquals(0, $board[1]['nb_tasks']);
         $this->assertEquals(0, $board[1]['score']);
 
@@ -479,9 +481,9 @@ class BoardFormatterTest extends Base
         $this->assertSame(0, $board[1]['columns'][3]['nb_tasks']);
 
         $this->assertEquals('Swimlane 2', $board[2]['name']);
-        $this->assertCount(4, $board[2]['columns']);
+        $this->assertCount(6, $board[2]['columns']);
         $this->assertEquals(3, $board[2]['nb_swimlanes']);
-        $this->assertEquals(4, $board[2]['nb_columns']);
+        $this->assertEquals(6, $board[2]['nb_columns']);
         $this->assertEquals(0, $board[2]['nb_tasks']);
         $this->assertEquals(0, $board[2]['score']);
 
@@ -519,9 +521,9 @@ class BoardFormatterTest extends Base
         $this->assertCount(1, $board);
 
         $this->assertEquals('Default swimlane', $board[0]['name']);
-        $this->assertCount(4, $board[0]['columns']);
+        $this->assertCount(6, $board[0]['columns']);
         $this->assertEquals(1, $board[0]['nb_swimlanes']);
-        $this->assertEquals(4, $board[0]['nb_columns']);
+        $this->assertEquals(6, $board[0]['nb_columns']);
         $this->assertEquals(3, $board[0]['nb_tasks']);
         $this->assertEquals(0, $board[0]['score']);
 

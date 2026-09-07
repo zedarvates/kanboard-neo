@@ -26,4 +26,4 @@ Shared rules for all agents and developers on this project. Keep cheap, keep loc
 ## Kanboard Neo invariants
 - New projects must default to the ordered columns Triage, Backlog, Started, In Review, Done, and Canceled.
 - A move-column comment must be denied without a logged-in user and, when allowed, must record the resolved destination column title.
-- Publishing, production deployment, payment, legal acceptance and permission expansion remain owner-gated.
+- Container publication and Codeberg mirroring must run only when the workflow actor is the repository owner.

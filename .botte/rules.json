@@ -68,18 +68,33 @@
       "id": "authority.owner-external-transitions",
       "action": "external-transition",
       "effect": "DENY",
-      "scope": ["publication", "production-deployment", "payment", "legal-acceptance", "permission-expansion"],
-      "statement": "Publishing, production deployment, payment, legal acceptance and permission expansion remain owner-gated.",
-      "source_ref": ".botte/policy.md#Publishing, production deployment, payment, legal acceptance and permission expansion remain owner-gated.",
+      "scope": ["container-publication", "codeberg-mirror"],
+      "statement": "Container publication and Codeberg mirroring must run only when the workflow actor is the repository owner.",
+      "source_ref": ".botte/policy.md#Container publication and Codeberg mirroring",
       "owner_only": true,
-      "enforced": false,
-      "enforcement_refs": [],
-      "probes": [],
+      "enforced": true,
+      "enforcement_refs": [
+        ".github/workflows/codeberg_mirror.yml#if: ${{ github.actor == github.repository_owner }}",
+        ".github/workflows/docker.yml#if: ${{ github.event_name != 'pull_request' && github.actor == github.repository_owner }}",
+        "scripts/validate_workflow_boundaries.py#def workflow_boundary_errors"
+      ],
+      "probes": [
+        {
+          "id": "authority.owner-external-transitions.allow-owner-gates",
+          "polarity": "allow",
+          "evidence_ref": "tests/test_workflow_boundaries.py#def test_owner_gates_are_present"
+        },
+        {
+          "id": "authority.owner-external-transitions.deny-missing-owner-gate",
+          "polarity": "deny",
+          "evidence_ref": "tests/test_workflow_boundaries.py#def test_missing_owner_gate_fails_closed"
+        }
+      ],
       "supersedes": [],
       "last_verified": {
-        "at": "2026-09-07T03:00:00+00:00",
-        "content_sha256": "ade75899f3639352d728bc474ce7c2f36918d28fb5b79059dd373ee84aa0fce3",
-        "evidence_ref": "README.md#Publishing, production deployment, payment, legal acceptance and permission expansion remain owner-gated."
+        "at": "2026-09-07T03:30:00+00:00",
+        "content_sha256": "ef144202edb8d75102697d0f8a9966da73424257854f552e6e03c5e0faa4dcfd",
+        "evidence_ref": "tests/test_workflow_boundaries.py#def test_missing_owner_gate_fails_closed"
       }
     }
   ]
