@@ -64,7 +64,7 @@ class TaskProjectMoveModelTest extends Base
         $this->assertEquals(0, $task['category_id']);
         $this->assertEquals(2, $task['swimlane_id']);
         $this->assertEquals(2, $task['project_id']);
-        $this->assertEquals(5, $task['column_id']);
+        $this->assertEquals(7, $task['column_id']);
         $this->assertEquals(1, $task['position']);
         $this->assertEquals(1, $task['priority']);
         $this->assertEquals('test', $task['title']);
@@ -99,7 +99,7 @@ class TaskProjectMoveModelTest extends Base
         $this->assertEquals(0, $task['owner_id']);
         $this->assertEquals(2, $task['category_id']);
         $this->assertEquals(2, $task['swimlane_id']);
-        $this->assertEquals(6, $task['column_id']);
+        $this->assertEquals(8, $task['column_id']);
         $this->assertEquals(1, $task['position']);
         $this->assertEquals(2, $task['project_id']);
         $this->assertEquals('test', $task['title']);
@@ -135,7 +135,7 @@ class TaskProjectMoveModelTest extends Base
         $this->assertEquals(1, $task['position']);
         $this->assertEquals(2, $task['owner_id']);
         $this->assertEquals(2, $task['project_id']);
-        $this->assertEquals(6, $task['column_id']);
+        $this->assertEquals(8, $task['column_id']);
     }
 
     public function testMoveAnotherProjectWithForbiddenUser()
@@ -168,7 +168,7 @@ class TaskProjectMoveModelTest extends Base
         $this->assertEquals(1, $task['position']);
         $this->assertEquals(0, $task['owner_id']);
         $this->assertEquals(2, $task['project_id']);
-        $this->assertEquals(6, $task['column_id']);
+        $this->assertEquals(8, $task['column_id']);
     }
 
     public function testMoveAnotherProjectWithSwimlane()
@@ -198,7 +198,7 @@ class TaskProjectMoveModelTest extends Base
         $this->assertEquals(0, $task['owner_id']);
         $this->assertEquals(0, $task['category_id']);
         $this->assertEquals(4, $task['swimlane_id']);
-        $this->assertEquals(6, $task['column_id']);
+        $this->assertEquals(8, $task['column_id']);
         $this->assertEquals(1, $task['position']);
         $this->assertEquals(2, $task['project_id']);
         $this->assertEquals('test', $task['title']);
@@ -231,7 +231,7 @@ class TaskProjectMoveModelTest extends Base
         $this->assertEquals(0, $task['owner_id']);
         $this->assertEquals(0, $task['category_id']);
         $this->assertEquals(2, $task['swimlane_id']);
-        $this->assertEquals(6, $task['column_id']);
+        $this->assertEquals(8, $task['column_id']);
         $this->assertEquals(1, $task['position']);
         $this->assertEquals(2, $task['project_id']);
         $this->assertEquals('test', $task['title']);

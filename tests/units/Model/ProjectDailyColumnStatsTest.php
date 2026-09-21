@@ -239,19 +239,19 @@ class ProjectDailyColumnStatsTest extends Base
         $projectDailyColumnStats->updateTotals(1, '2016-01-18');
 
         $expected = array(
-            array('Date', 'Backlog', 'Ready', 'Work in progress', 'Done'),
-            array('2016-01-16', 4, 4, 0, 0),
-            array('2016-01-17', 4, 4, 1, 0),
-            array('2016-01-18', 4, 5, 3, 0),
+            array('Date', 'Triage', 'Backlog', 'Started', 'In Review', 'Done', 'Canceled'),
+            array('2016-01-16', 4, 4, 0, 0, 0, 0),
+            array('2016-01-17', 4, 4, 1, 0, 0, 0),
+            array('2016-01-18', 4, 5, 3, 0, 0, 0),
         );
 
         $this->assertSame($expected, $projectDailyColumnStats->getAggregatedMetrics(1, '2016-01-16', '2016-01-18'));
 
         $expected = array(
-            array('Date', 'Backlog', 'Ready', 'Work in progress', 'Done'),
-            array('2016-01-16', 11, 13, 0, 0),
-            array('2016-01-17', 11, 13, 0, 0),
-            array('2016-01-18', 11, 14, 1, 0),
+            array('Date', 'Triage', 'Backlog', 'Started', 'In Review', 'Done', 'Canceled'),
+            array('2016-01-16', 11, 13, 0, 0, 0, 0),
+            array('2016-01-17', 11, 13, 0, 0, 0, 0),
+            array('2016-01-18', 11, 14, 1, 0, 0, 0),
         );
 
         $this->assertSame($expected, $projectDailyColumnStats->getAggregatedMetrics(1, '2016-01-16', '2016-01-18', 'score'));

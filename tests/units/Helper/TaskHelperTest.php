@@ -19,12 +19,12 @@ class TaskHelperTest extends Base
         $helper = new TaskHelper($this->container);
 
         $this->assertEquals(
-            '<span class="task-priority" title="Task priority"><span class="ui-helper-hidden-accessible">Task priority </span>P2</span>',
+            '<span class="task-priority priority-high" title="Task priority"><span class="ui-helper-hidden-accessible">Task priority </span><span class="priority-icon">■</span> High</span>',
             $helper->renderPriority(2)
         );
 
         $this->assertEquals(
-            '<span class="task-priority" title="Task priority"><span class="ui-helper-hidden-accessible">Task priority </span>-P6</span>',
+            '<span class="task-priority " title="Task priority"><span class="ui-helper-hidden-accessible">Task priority </span>P-6</span>',
             $helper->renderPriority(-6)
         );
     }

@@ -35,7 +35,7 @@ class CommentCreationMoveTaskColumnTest extends Base
         $this->assertNotEmpty($comment);
         $this->assertEquals(1, $comment['task_id']);
         $this->assertEquals(1, $comment['user_id']);
-        $this->assertEquals('Moved to column Ready', $comment['comment']);
+        $this->assertEquals('Moved to column Backlog', $comment['comment']);
     }
 
     public function testWithUserNotLogged()

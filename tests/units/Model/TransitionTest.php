@@ -30,8 +30,8 @@ class TransitionTest extends Base
 
         $transitions = $transitionModel->getAllByTask(1);
         $this->assertCount(1, $transitions);
-        $this->assertEquals('Backlog', $transitions[0]['src_column']);
-        $this->assertEquals('Ready', $transitions[0]['dst_column']);
+        $this->assertEquals('Triage', $transitions[0]['src_column']);
+        $this->assertEquals('Backlog', $transitions[0]['dst_column']);
         $this->assertEquals('', $transitions[0]['name']);
         $this->assertEquals('admin', $transitions[0]['username']);
         $this->assertEquals(1, $transitions[0]['user_id']);
@@ -119,15 +119,15 @@ class TransitionTest extends Base
         $this->assertEquals('test2', $transitions[2]['title']);
         $this->assertEquals('test1', $transitions[3]['title']);
 
-        $this->assertEquals('Ready', $transitions[0]['src_column']);
-        $this->assertEquals('Ready', $transitions[1]['src_column']);
-        $this->assertEquals('Backlog', $transitions[2]['src_column']);
-        $this->assertEquals('Backlog', $transitions[3]['src_column']);
+        $this->assertEquals('Backlog', $transitions[0]['src_column']);
+        $this->assertEquals('Backlog', $transitions[1]['src_column']);
+        $this->assertEquals('Triage', $transitions[2]['src_column']);
+        $this->assertEquals('Triage', $transitions[3]['src_column']);
 
-        $this->assertEquals('Work in progress', $transitions[0]['dst_column']);
-        $this->assertEquals('Work in progress', $transitions[1]['dst_column']);
-        $this->assertEquals('Ready', $transitions[2]['dst_column']);
-        $this->assertEquals('Ready', $transitions[3]['dst_column']);
+        $this->assertEquals('Started', $transitions[0]['dst_column']);
+        $this->assertEquals('Started', $transitions[1]['dst_column']);
+        $this->assertEquals('Backlog', $transitions[2]['dst_column']);
+        $this->assertEquals('Backlog', $transitions[3]['dst_column']);
 
         $this->assertEquals('admin', $transitions[0]['username']);
         $this->assertEquals('admin', $transitions[1]['username']);
