@@ -66,7 +66,7 @@ class TaskFinderModelTest extends Base
         $this->assertEquals('C1', $task['category_name']);
         $this->assertEquals('Default swimlane', $task['swimlane_name']);
         $this->assertEquals('Project #1', $task['project_name']);
-        $this->assertEquals('Backlog', $task['column_title']);
+        $this->assertEquals('Triage', $task['column_title']);
         $this->assertEquals('admin', $task['assignee_username']);
         $this->assertEquals('', $task['assignee_name']);
         $this->assertEquals('', $task['creator_username']);

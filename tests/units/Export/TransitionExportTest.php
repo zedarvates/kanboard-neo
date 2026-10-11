@@ -39,7 +39,7 @@ class TransitionExportTest extends Base
         );
 
         $this->assertEquals(
-            array(1, 'test', 'Backlog', 'Ready', 'admin', date('m/d/Y H:i', time()), 1.0),
+            array(1, 'test', 'Triage', 'Backlog', 'admin', date('m/d/Y H:i', time()), 1.0),
             $export[1]
         );
     }
