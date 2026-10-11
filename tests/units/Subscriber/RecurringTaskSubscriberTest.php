@@ -102,7 +102,7 @@ class RecurringTaskSubscriberTest extends Base
 
         $event = TaskEventBuilder::getInstance($this->container)
             ->withTaskId(1)
-            ->withValues(array('dst_column_id' => 4))
+            ->withValues(array('dst_column_id' => 6))
             ->buildEvent();
 
         $subscriber->onMove($event);
