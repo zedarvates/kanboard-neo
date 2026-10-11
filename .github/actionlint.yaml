@@ -1,0 +1,3 @@
+self-hosted-runner:
+  labels: [eurekai]
+config-variables: []
