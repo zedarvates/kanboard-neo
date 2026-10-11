@@ -65,8 +65,8 @@ class TaskExportTest extends Base
         $this->assertEquals('Default swimlane', $report[1][5]);
         $this->assertEquals('S1', $report[2][5]);
 
-        $this->assertEquals('Ready', $report[1][6]);
-        $this->assertEquals('Backlog', $report[2][6]);
+        $this->assertEquals('Backlog', $report[1][6]);
+        $this->assertEquals('Triage', $report[2][6]);
 
         $this->assertEquals('Yellow', $report[1][8]);
         $this->assertEquals('Yellow', $report[2][8]);

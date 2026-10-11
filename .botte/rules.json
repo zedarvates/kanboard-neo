@@ -1,0 +1,101 @@
+{
+  "schema": "botte.rules-manifest/v1",
+  "rules": [
+    {
+      "id": "board.default-columns",
+      "action": "board-project-create",
+      "effect": "REQUIRE",
+      "scope": ["new-project"],
+      "statement": "New projects must default to the ordered columns Triage, Backlog, Started, In Review, Done, and Canceled.",
+      "source_ref": ".botte/policy.md#New projects must default to the ordered columns",
+      "owner_only": false,
+      "enforced": true,
+      "enforcement_refs": [
+        "app/Model/BoardModel.php#return array(t('Triage'), t('Backlog'), t('Started'), t('In Review'), t('Done'), t('Canceled'));"
+      ],
+      "probes": [
+        {
+          "id": "board.default-columns.allow-current-order",
+          "polarity": "allow",
+          "evidence_ref": "tests/integration/BoardProcedureTest.php#array('Triage', 'Backlog', 'Started', 'In Review', 'Done', 'Canceled')"
+        },
+        {
+          "id": "board.default-columns.deny-historical-count",
+          "polarity": "deny",
+          "evidence_ref": "tests/integration/BoardProcedureTest.php#$this->assertCount(6, $board[0]['columns']);"
+        }
+      ],
+      "supersedes": [],
+      "last_verified": {
+        "at": "2026-09-07T03:00:00+00:00",
+        "content_sha256": "b0278c5918d032ded757c2de22c01fe6e658de8507d45ff7f5e8995221af327b",
+        "evidence_ref": "tests/integration/BoardProcedureTest.php#array('Triage', 'Backlog', 'Started', 'In Review', 'Done', 'Canceled')"
+      }
+    },
+    {
+      "id": "board.move-comment-authenticated",
+      "action": "create-move-comment",
+      "effect": "REQUIRE",
+      "scope": ["task-column-move"],
+      "statement": "A move-column comment must be denied without a logged-in user and, when allowed, must record the resolved destination column title.",
+      "source_ref": ".botte/policy.md#A move-column comment must be denied",
+      "owner_only": false,
+      "enforced": true,
+      "enforcement_refs": [
+        "app/Action/CommentCreationMoveTaskColumn.php#if (! $this->userSession->isLogged())",
+        "app/Action/CommentCreationMoveTaskColumn.php#$column = $this->columnModel->getById($data['task']['column_id']);"
+      ],
+      "probes": [
+        {
+          "id": "board.move-comment-authenticated.allow-resolved-title",
+          "polarity": "allow",
+          "evidence_ref": "tests/units/Action/CommentCreationMoveTaskColumnTest.php#$this->assertEquals('Moved to column Backlog', $comment['comment']);"
+        },
+        {
+          "id": "board.move-comment-authenticated.deny-anonymous",
+          "polarity": "deny",
+          "evidence_ref": "tests/units/Action/CommentCreationMoveTaskColumnTest.php#$this->assertFalse($action->execute($event, TaskModel::EVENT_MOVE_COLUMN));"
+        }
+      ],
+      "supersedes": [],
+      "last_verified": {
+        "at": "2026-09-07T03:00:00+00:00",
+        "content_sha256": "ce68a12cef699d79fd4bf5a8660e722115cb8823f21f192cf3fe252abec02dd6",
+        "evidence_ref": "tests/units/Action/CommentCreationMoveTaskColumnTest.php#$this->assertFalse($action->execute($event, TaskModel::EVENT_MOVE_COLUMN));"
+      }
+    },
+    {
+      "id": "authority.owner-external-transitions",
+      "action": "external-transition",
+      "effect": "DENY",
+      "scope": ["container-publication", "codeberg-mirror"],
+      "statement": "Container publication and Codeberg mirroring must run only when the workflow actor is the repository owner.",
+      "source_ref": ".botte/policy.md#Container publication and Codeberg mirroring",
+      "owner_only": true,
+      "enforced": true,
+      "enforcement_refs": [
+        ".github/workflows/codeberg_mirror.yml#if: ${{ github.actor == github.repository_owner }}",
+        ".github/workflows/docker.yml#if: ${{ github.event_name != 'pull_request' && github.actor == github.repository_owner }}",
+        "scripts/validate_workflow_boundaries.py#def workflow_boundary_errors"
+      ],
+      "probes": [
+        {
+          "id": "authority.owner-external-transitions.allow-owner-gates",
+          "polarity": "allow",
+          "evidence_ref": "tests/test_workflow_boundaries.py#def test_owner_gates_are_present"
+        },
+        {
+          "id": "authority.owner-external-transitions.deny-missing-owner-gate",
+          "polarity": "deny",
+          "evidence_ref": "tests/test_workflow_boundaries.py#def test_missing_owner_gate_fails_closed"
+        }
+      ],
+      "supersedes": [],
+      "last_verified": {
+        "at": "2026-09-07T03:30:00+00:00",
+        "content_sha256": "ef144202edb8d75102697d0f8a9966da73424257854f552e6e03c5e0faa4dcfd",
+        "evidence_ref": "tests/test_workflow_boundaries.py#def test_missing_owner_gate_fails_closed"
+      }
+    }
+  ]
+}
