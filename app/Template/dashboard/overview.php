@@ -57,7 +57,7 @@
     <?php foreach ($recent_activity as $event): ?>
     <div class="activity-item">
         <div class="activity-avatar">
-            <?= $this->url->link($this->helper->user->getAvatar($event['creator_name'] ?? $event['author_name'] ?? '?'), 'UserViewController', 'show', array('user_id' => $event['creator_id'] ?? $event['author_id'] ?? 0)) ?>
+            <?= $this->url->link($this->avatar->small($event['creator_id'], $event['author_username'], $event['author_name'], $event['email'], $event['avatar_path']), 'UserViewController', 'show', array('user_id' => $event['creator_id'] ?? $event['author_id'] ?? 0)) ?>
         </div>
         <div class="activity-content">
             <div class="activity-header">

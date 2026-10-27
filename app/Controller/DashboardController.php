@@ -2,6 +2,9 @@
 
 namespace Kanboard\Controller;
 
+use Kanboard\Model\ColumnModel;
+use Kanboard\Model\TaskModel;
+
 /**
  * Dashboard Controller
  *
@@ -20,18 +23,23 @@ class DashboardController extends BaseController
         $user = $this->getUser();
 
         // Compute real dashboard stats
-        $myTasks = $this->taskFinderModel->countByAssignee($user['id']);
-        $inReview = $this->db->table('tasks')
-            ->eq('owner_id', $user['id'])
-            ->eq('is_active', 1)
-            ->eq('column_id', $this->getInReviewColumnIds())
-            ->count();
+        $projectIds = $this->projectPermissionModel->getActiveProjectIds($user['id']);
+        $inReviewColumnIds = $this->getInReviewColumnIds($projectIds);
+        $myTasks = $this->taskFinderModel->getUserQuery($user['id'])->count();
+        $inReview = 0;
+
+        if (! empty($inReviewColumnIds)) {
+            $inReview = $this->db->table(TaskModel::TABLE)
+                ->eq('owner_id', $user['id'])
+                ->eq('is_active', TaskModel::STATUS_OPEN)
+                ->in('column_id', $inReviewColumnIds)
+                ->count();
+        }
         $overdue = $this->taskFinderModel->getOverdueTasksByUser($user['id']);
-        $projectsCount = $this->projectPermissionModel->getActiveProjectIds($user['id']);
-        $recentActivity = $this->helper->projectActivity->getProjectsActivities(
-            $this->projectPermissionModel->getActiveProjectIds($user['id']),
-            10
-        );
+        $projectsCount = $projectIds;
+        $recentActivity = empty($projectIds)
+            ? array()
+            : $this->helper->projectActivity->getProjectsEvents($projectIds, 10);
 
         $this->response->html($this->helper->layout->dashboard('dashboard/overview', array(
             'title'              => t('Dashboard for %s', $this->helper->user->getFullname($user)),
@@ -49,17 +57,17 @@ class DashboardController extends BaseController
     /**
      * Get column IDs that represent "in review" status
      */
-    private function getInReviewColumnIds(): array
+    private function getInReviewColumnIds(array $projectIds): array
     {
-        $projectIds = $this->projectPermissionModel->getActiveProjectIds($this->getUser()['id']);
         if (empty($projectIds)) {
-            return [0];
+            return array();
         }
-        return $this->db->table('columns')
-            ->eq('columns.hide_in_dashboard', 0)
-            ->in('columns.project_id', $projectIds)
-            ->ilike('columns.title', '%review%')
-            ->findAll('columns.id');
+
+        return $this->db->table(ColumnModel::TABLE)
+            ->eq(ColumnModel::TABLE.'.hide_in_dashboard', 0)
+            ->in(ColumnModel::TABLE.'.project_id', $projectIds)
+            ->ilike(ColumnModel::TABLE.'.title', '%review%')
+            ->findAllByColumn(ColumnModel::TABLE.'.id');
     }
 
     /**
