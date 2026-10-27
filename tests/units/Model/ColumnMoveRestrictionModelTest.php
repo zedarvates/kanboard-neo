@@ -49,8 +49,8 @@ class ColumnMoveRestrictionModelTest extends Base
         $this->assertEquals('Role A', $restriction['role']);
         $this->assertEquals(1, $restriction['role_id']);
         $this->assertEquals(1, $restriction['project_id']);
-        $this->assertEquals('Ready', $restriction['src_column_title']);
-        $this->assertEquals('Work in progress', $restriction['dst_column_title']);
+        $this->assertEquals('Backlog', $restriction['src_column_title']);
+        $this->assertEquals('Started', $restriction['dst_column_title']);
         $this->assertEquals(2, $restriction['src_column_id']);
         $this->assertEquals(3, $restriction['dst_column_id']);
     }
@@ -78,15 +78,15 @@ class ColumnMoveRestrictionModelTest extends Base
         $this->assertEquals('Role A', $restrictions[0]['role']);
         $this->assertEquals(1, $restrictions[0]['role_id']);
         $this->assertEquals(1, $restrictions[0]['project_id']);
-        $this->assertEquals('Ready', $restrictions[0]['src_column_title']);
-        $this->assertEquals('Work in progress', $restrictions[0]['dst_column_title']);
+        $this->assertEquals('Backlog', $restrictions[0]['src_column_title']);
+        $this->assertEquals('Started', $restrictions[0]['dst_column_title']);
         $this->assertEquals(2, $restrictions[0]['src_column_id']);
         $this->assertEquals(3, $restrictions[0]['dst_column_id']);
 
         $this->assertEquals(2, $restrictions[1]['restriction_id']);
         $this->assertEquals('Role B', $restrictions[1]['role']);
-        $this->assertEquals('Work in progress', $restrictions[1]['src_column_title']);
-        $this->assertEquals('Done', $restrictions[1]['dst_column_title']);
+        $this->assertEquals('Started', $restrictions[1]['src_column_title']);
+        $this->assertEquals('In Review', $restrictions[1]['dst_column_title']);
         $this->assertEquals(3, $restrictions[1]['src_column_id']);
         $this->assertEquals(4, $restrictions[1]['dst_column_id']);
     }
