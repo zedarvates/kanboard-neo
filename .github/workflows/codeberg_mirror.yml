@@ -3,24 +3,55 @@ name: Mirror to Codeberg
 on:
   push:
     branches: [ main ]
-  delete:
   workflow_dispatch:
+    inputs:
+      apply:
+        description: Apply updates after the dry run succeeds
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: codeberg-mirror
+  cancel-in-progress: false
 
 jobs:
   mirror:
     if: ${{ github.actor == github.repository_owner }}
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
+      - name: Check activation and source
+        id: configuration
+        env:
+          MIRROR_ENABLED: ${{ vars.CODEBERG_MIRROR_ENABLED }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_REPOSITORY" != 'zedarvates/kanboard-neo' || "$GITHUB_REF" != 'refs/heads/main' ]]; then
+            echo '::error::The mirror may only run from zedarvates/kanboard-neo on main.'
+            exit 1
+          fi
+          if [[ "$MIRROR_ENABLED" == 'true' ]]; then
+            echo 'enabled=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'enabled=false' >> "$GITHUB_OUTPUT"
+            echo '::notice::Codeberg mirror disabled. Confirm the destination and configure it before enabling.'
+          fi
       - name: Checkout
+        if: steps.configuration.outputs.enabled == 'true'
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 0
+          fetch-depth: 1
+          persist-credentials: false
       - name: Mirror to Codeberg
+        if: steps.configuration.outputs.enabled == 'true'
         env:
+          CODEBERG_MIRROR_ENABLED: ${{ vars.CODEBERG_MIRROR_ENABLED }}
+          CODEBERG_MIRROR_REPOSITORY: ${{ vars.CODEBERG_MIRROR_REPOSITORY }}
+          CODEBERG_MIRROR_APPLY: ${{ github.event_name == 'push' || inputs.apply }}
           CODEBERG_USERNAME: ${{ secrets.CODEBERG_USERNAME }}
           CODEBERG_TOKEN: ${{ secrets.CODEBERG_TOKEN }}
-        run: |
-          git remote add codeberg https://${{ secrets.CODEBERG_USERNAME }}:${{ secrets.CODEBERG_TOKEN }}@codeberg.org/kanboard/kanboard.git
-          git push --force --prune codeberg \
-            "refs/heads/*:refs/heads/*" \
-            "refs/tags/*:refs/tags/*"
+        run: python3 scripts/mirror_codeberg.py

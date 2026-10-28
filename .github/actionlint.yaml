@@ -1,3 +1,5 @@
 self-hosted-runner:
   labels: [eurekai]
-config-variables: []
+config-variables:
+  - CODEBERG_MIRROR_ENABLED
+  - CODEBERG_MIRROR_REPOSITORY
