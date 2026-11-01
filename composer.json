@@ -64,7 +64,7 @@
     },
     "require-dev": {
         "doctrine/instantiator": "2.0.0",
-        "symfony/stopwatch": "^7.4",
+        "symfony/stopwatch": "^8.1",
         "phpunit/phpunit": "^12.0"
     }
 }
